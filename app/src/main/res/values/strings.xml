@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Flashcard-App</string>
+    <string name="app_name">MYNAH</string>
+    <string name="appSubtitle">Flash Card App</string>
+    <string name="viewAll">View All</string>
+    <string name="flashcard">Flashcards</string>
+    <string name="allFlashCards">All Flash Cards</string>
+
+    <string name="placeholderTitle">The Title Placeholder</string>
+    <string name="placeholderNumOfCards">-# of Cards-</string>
+    <string name="placeholderText">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat.
+    </string>
+
 </resources>
