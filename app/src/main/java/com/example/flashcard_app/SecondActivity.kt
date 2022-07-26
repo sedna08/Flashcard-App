@@ -1,5 +1,4 @@
 package com.example.flashcard_app
-
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -14,9 +13,6 @@ class SecondActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         var score = 0
-
-        //  binding elements not working idk why
-        /*
 
         binding.radioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             if (binding.radioBtnCheck.isChecked) {
@@ -44,8 +40,6 @@ class SecondActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-         */
 
     }
 
