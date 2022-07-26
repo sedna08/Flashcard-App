@@ -30,7 +30,7 @@ class SecondActivity : AppCompatActivity() {
                 Toast.makeText(this, "ERROR! Must check if correct or wrong", Toast.LENGTH_SHORT).show()
             }
             else {
-                // display next question
+                // code to display next question
             }
         }
 
