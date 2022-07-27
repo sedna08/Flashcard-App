@@ -3,12 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/activity_second.xml" value="0.213768115942029" />
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/activity_third.xml" value="0.11302083333333333" />
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/alert_dialog.xml" value="0.264" />
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/flash_card_layout.xml" value="0.11302083333333333" />
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/login_dialog.xml" value="0.253125" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/activity_second.xml" value="0.358695652173913" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/activity_third.xml" value="0.358695652173913" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/alert_dialog.xml" value="0.358695652173913" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/flash_card_layout.xml" value="0.358695652173913" />
       </map>
     </option>
   </component>

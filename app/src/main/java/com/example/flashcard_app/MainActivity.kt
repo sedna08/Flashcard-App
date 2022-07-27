@@ -12,8 +12,5 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intent = Intent(this, ThirdActivity::class.java)
-        startActivity(intent)
-
     }
 }
