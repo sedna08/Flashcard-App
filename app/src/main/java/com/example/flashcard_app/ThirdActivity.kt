@@ -37,6 +37,8 @@ class ThirdActivity : AppCompatActivity() {
         adapter = RecyclerAdapter(this, questions, answers, durations)
         binding.rvQuestions.adapter = adapter
 
+
+
     }
 }
 
@@ -56,12 +58,12 @@ class RecyclerAdapter(
         var cDelete: Chip
 
         init {
-            tvQuestion = itemView.findViewById(R.id.tvQuestion)
-            tvAnswer = itemView.findViewById(R.id.tvAnswer)
+            tvQuestion = itemView.findViewById(R.id.tvSet)
+            tvAnswer = itemView.findViewById(R.id.tvNumOfCards)
             tvDuration = itemView.findViewById(R.id.tvDuration)
-            cvFlashCard = itemView.findViewById<MaterialCardView>(R.id.cardView)
-            cEdit = itemView.findViewById(R.id.cEdit)
-            cDelete = itemView.findViewById(R.id.cDelete)
+            cvFlashCard = itemView.findViewById<MaterialCardView>(R.id.cardViewSet)
+            cEdit = itemView.findViewById(R.id.cPlaySet)
+            cDelete = itemView.findViewById(R.id.cDeleteSet)
 
             itemView.setOnClickListener {
                 Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
@@ -107,5 +109,7 @@ class RecyclerAdapter(
     override fun getItemCount(): Int {
         return questions.size
     }
+
+
 
 }

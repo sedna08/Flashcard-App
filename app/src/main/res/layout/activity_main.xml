@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,386 +9,326 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ScrollView
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbarSize="0dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:scrollbarSize="0dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
-                    android:paddingTop="10dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/myna" />
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="false"
+                        android:cropToPadding="false"
+                        android:paddingTop="10dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/myna" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewAppName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:fontFamily="@font/bungee"
+                            android:includeFontPadding="false"
+                            android:shadowColor="@color/white1"
+                            android:text="@string/app_name"
+                            android:textColor="@color/white1"
+                            android:textSize="34sp" />
+
+                        <TextView
+                            android:id="@+id/textViewAppName2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:includeFontPadding="false"
+                            android:shadowColor="@color/white1"
+                            android:text="@string/appSubtitle"
+                            android:textColor="@color/white1"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:id="@+id/hScrollView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:scrollbarSize="0dp">
 
-                    <TextView
-                        android:id="@+id/textViewAppName"
+                    <LinearLayout
+                        android:id="@+id/horizontal_cardLayout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="30dp"
-                        android:fontFamily="@font/bungee"
-                        android:includeFontPadding="false"
-                        android:shadowColor="@color/white1"
-                        android:text="@string/app_name"
-                        android:textColor="@color/white1"
-                        android:textSize="34sp" />
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/textViewAppName2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="30dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:includeFontPadding="false"
-                        android:shadowColor="@color/white1"
-                        android:text="@string/appSubtitle"
-                        android:textColor="@color/white1"
-                        android:textSize="20sp" />
-                </LinearLayout>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv1"
+                            android:layout_width="240dp"
+                            android:layout_height="300dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:backgroundTint="@color/pastel2"
+                            android:padding="30dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="5dp">
 
-            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:orientation="vertical"
+                                android:padding="30dp"
+                                android:paddingBottom="15dp">
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:scrollbarSize="0dp">
+                                <TextView
+                                    android:id="@+id/cv1Name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:breakStrategy="simple"
+                                    android:fontFamily="sans-serif-black"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/placeholderTitle"
+                                    android:textColor="@color/black"
+                                    android:textSize="32sp"
+                                    app:autoSizeTextType="uniform" />
+
+                                <TextView
+                                    android:id="@+id/cv1Num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/placeholderNumOfCards"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv2"
+                            android:layout_width="240dp"
+                            android:layout_height="300dp"
+                            android:layout_margin="10dp"
+                            android:backgroundTint="@color/pastel3"
+                            android:padding="30dp"
+                            android:visibility="visible"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="5dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:orientation="vertical"
+                                android:padding="30dp"
+                                android:paddingBottom="15dp">
+
+                                <TextView
+                                    android:id="@+id/cv2Name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:autoText="false"
+                                    android:fontFamily="sans-serif-black"
+                                    android:text="@string/placeholderTitle"
+                                    android:textColor="@color/black"
+                                    android:textSize="32sp"
+                                    app:autoSizeTextType="uniform" />
+
+                                <TextView
+                                    android:id="@+id/cv2Num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/placeholderNumOfCards"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv3"
+                            android:layout_width="240dp"
+                            android:layout_height="300dp"
+                            android:layout_margin="10dp"
+                            android:backgroundTint="@color/pastel4"
+                            android:padding="30dp"
+                            android:visibility="visible"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="5dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:orientation="vertical"
+                                android:padding="30dp"
+                                android:paddingBottom="15dp">
+
+                                <TextView
+                                    android:id="@+id/cv3Name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:autoText="false"
+                                    android:fontFamily="sans-serif-black"
+                                    android:text="@string/placeholderTitle"
+                                    android:textColor="@color/black"
+                                    android:textSize="32sp"
+                                    app:autoSizeTextType="uniform" />
+
+                                <TextView
+                                    android:id="@+id/cv3Num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/placeholderNumOfCards"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <ImageButton
+                            android:id="@+id/b1Add"
+                            style="@android:style/Widget.Holo.Light.ImageButton"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#00FFFFFF"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/add" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="240dp"
-                        android:layout_height="300dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:backgroundTint="@color/pastel2"
-                        android:padding="30dp"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="5dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:orientation="vertical"
-                            android:padding="30dp"
-                            android:paddingBottom="15dp">
-
-                            <TextView
-                                android:id="@+id/textView1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:breakStrategy="simple"
-                                android:fontFamily="sans-serif-black"
-                                android:includeFontPadding="false"
-                                android:text="@string/placeholderTitle"
-                                android:textColor="@color/black"
-                                android:textSize="32sp"
-                                app:autoSizeTextType="uniform" />
-
-                            <TextView
-                                android:id="@+id/textView2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/placeholderNumOfCards"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="240dp"
-                        android:layout_height="300dp"
-                        android:layout_margin="10dp"
-                        android:backgroundTint="@color/pastel3"
-                        android:padding="30dp"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="5dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:orientation="vertical"
-                            android:padding="30dp"
-                            android:paddingBottom="15dp">
-
-                            <TextView
-                                android:id="@+id/textView5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autoText="false"
-                                android:fontFamily="sans-serif-black"
-                                android:text="@string/placeholderTitle"
-                                android:textColor="@color/black"
-                                android:textSize="32sp"
-                                app:autoSizeTextType="uniform" />
-
-                            <TextView
-                                android:id="@+id/textView6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/placeholderNumOfCards"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <ImageButton
-                        android:id="@+id/imageButton"
-                        style="@android:style/Widget.Holo.Light.ImageButton"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="#00FFFFFF"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/add" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/layout_curvetop"
-                android:orientation="horizontal"></LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:background="@color/white1"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="30dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="35dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/layout_curvetop"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/white1"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="30dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textViewCards"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:breakStrategy="simple"
+                            android:fontFamily="sans-serif-black"
+                            android:includeFontPadding="false"
+                            android:text="@string/flashcard"
+                            android:textColor="@color/black"
+                            android:textSize="32sp"
+                            app:autoSizeTextType="uniform"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/textViewCards"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:breakStrategy="simple"
-                        android:fontFamily="sans-serif-black"
-                        android:includeFontPadding="false"
-                        android:text="@string/flashcard"
-                        android:textColor="@color/black"
-                        android:textSize="32sp"
-                        app:autoSizeTextType="uniform"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:maxLines="100"
+                        android:singleLine="false"
+                        android:text="@string/placeholderText" />
 
-                    <Button
-                        android:id="@+id/button"
-                        style="@style/Widget.AppCompat.Button.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical"
-                        android:text="@string/viewAll"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="100"
-                    android:singleLine="false"
-                    android:text="@string/placeholderText" />
-
-                <TextView
-                    android:id="@+id/textViewCards3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:breakStrategy="simple"
-                    android:fontFamily="sans-serif-black"
-                    android:includeFontPadding="false"
-                    android:text="@string/allFlashCards"
-                    android:textColor="@color/black"
-                    android:textSize="32sp"
-                    app:autoSizeTextType="uniform" />
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TableRow
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:stretchColumns="*">
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/textViewCards3"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:background="@drawable/layout_curveall"
-                            android:backgroundTint="@color/pastel2"
-                            android:elevation="3dp"
-                            android:paddingLeft="20dp"
-                            android:paddingTop="10dp"
-                            android:paddingRight="20dp"
-                            android:paddingBottom="10dp">
+                            android:breakStrategy="simple"
+                            android:fontFamily="sans-serif-black"
+                            android:includeFontPadding="false"
+                            android:text="@string/allFlashCards"
+                            android:textColor="@color/black"
+                            android:textSize="32sp"
+                            app:autoSizeTextType="uniform" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/b2Add"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.3"
+                            android:backgroundTint="#00FFFFFF"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/add"
+                            tools:ignore="SpeakableTextPresentCheck" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/textView23"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Set 1 Title"
-                                    android:textColor="@color/black"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/textView25"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="13 cards"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/imageView16"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="right|center_vertical"
-                                app:srcCompat="@drawable/iconplay" />
-
-
-                        </LinearLayout>
-                    </TableRow>
-
-                    <TableRow
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvSets"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:stretchColumns="*">
+                        tools:layout_conversion_absoluteHeight="189dp"
+                        tools:layout_conversion_absoluteWidth="371dp"
+                        tools:layout_editor_absoluteX="20dp"
+                        tools:layout_editor_absoluteY="83dp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/layout_curveall"
-                            android:backgroundTint="@color/pastel1"
-                            android:elevation="3dp"
-                            android:padding="10dp"
-                            android:paddingLeft="20dp"
-                            android:paddingTop="10dp"
-                            android:paddingRight="20dp"
-                            android:paddingBottom="10dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/textView14"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Set 1 Title"
-                                    android:textColor="@color/black"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/textView24"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="13 cards"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/imageView14"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="right|center_vertical"
-                                app:srcCompat="@drawable/iconplay" />
-
-
-                        </LinearLayout>
-                    </TableRow>
-
-                </TableLayout>
+                </LinearLayout>
 
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
