@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,8 +25,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="350dp"
-        android:layout_height="242dp"
+        android:layout_width="352dp"
+        android:layout_height="146dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -47,13 +46,13 @@
         android:id="@+id/btnShow"
         android:layout_width="170dp"
         android:layout_height="50dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#000000"
         android:fontFamily="casual"
-        android:textStyle="bold"
         android:text="Show answer"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -79,7 +78,7 @@
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="120dp"
-        android:layout_height="70dp"
+        android:layout_height="96dp"
         android:layout_marginTop="40dp"
         android:checkedButton="@+id/radio_button_1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +88,7 @@
         <RadioButton
             android:id="@+id/radioBtnCheck"
             android:layout_width="120dp"
-            android:layout_height="35dp"
+            android:layout_height="48dp"
             android:fontFamily="monospace"
             android:text="Correct"
             tools:layout_editor_absoluteX="92dp"
@@ -97,8 +96,8 @@
 
         <RadioButton
             android:id="@+id/radioBtnWrong"
-            android:layout_width="120dp"
-            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:fontFamily="monospace"
             android:text="Wrong"
             tools:layout_editor_absoluteX="92dp"
@@ -109,7 +108,7 @@
         android:id="@+id/btnNext"
         android:layout_width="186dp"
         android:layout_height="51dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="#F5F9AD"
         android:fontFamily="casual"
         android:text="Next Question"
