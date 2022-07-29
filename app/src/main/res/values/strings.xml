@@ -13,4 +13,9 @@
         consequat.
     </string>
 
+    <string-array name="alert_list">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
 </resources>

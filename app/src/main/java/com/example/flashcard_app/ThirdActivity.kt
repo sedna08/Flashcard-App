@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.flashcard_app.databinding.ActivityThirdBinding
@@ -36,6 +37,44 @@ class ThirdActivity : AppCompatActivity() {
 
         adapter = RecyclerAdapter(this, questions, answers, durations)
         binding.rvQuestions.adapter = adapter
+
+        binding.imageButton3.setOnClickListener{
+            val items: Array<String> = resources.getStringArray(R.array.alert_list)
+            var checkItem: Int = 0
+            var selectedMode: String
+            var mode = 0
+            AlertDialog.Builder(this)
+                .setTitle("Timed Mode?")
+                .setSingleChoiceItems(items, checkItem) { dialog, which ->
+                    //action code
+
+                    checkItem = which
+                    selectedMode = items[checkItem]
+
+                    if (selectedMode == "Yes") {
+                        Toast.makeText(this, "Timed Mode", Toast.LENGTH_SHORT).show()
+                        mode = 1
+                    }
+                    else if (selectedMode == "No") {
+                        Toast.makeText(this, "Casual Mode", Toast.LENGTH_SHORT).show()
+                        mode = 0
+                    }
+
+                }
+                .setPositiveButton("OK") { dialog, which ->
+                    //action code for positive response
+                    Toast.makeText(this, "Starting Flashcards", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, SecondActivity::class.java)
+                    intent.putExtra("user_mode", mode)
+                    startActivity(intent)
+                }
+                .setNegativeButton("CANCEL") { dialog, which ->
+                    //action code for negative response
+                    Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show()
+                }
+                .show()
+        }
 
     }
 }

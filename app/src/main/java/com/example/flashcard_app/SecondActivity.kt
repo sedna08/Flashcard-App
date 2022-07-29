@@ -17,26 +17,32 @@ class SecondActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         var score = 0
+        val bundle: Bundle? = intent.extras
+        val playMode = bundle!!.getString("user_mode")
 
         // code to display 1st question here
 
-        /*
+        /*  note for timer:
             unit = milliseconds
             5000 = time left
             1000 = interval of tick
         */
-        timer = object : CountDownTimer(5000,1000){
-            override fun onTick(p0: Long) {
-                // displays no. of seconds left every 1 second
-                ("Time left: " + p0/1000).also { binding.textView3.text = it }
-            }
 
-            override fun onFinish() {
-                // code to display next question
-                TODO("Not yet implemented")
-            }
+        if (playMode == "1") {
+            timer = object : CountDownTimer(5000,1000){
+                override fun onTick(p0: Long) {
+                    // displays no. of seconds left every 1 second
+                    ("Time left: " + p0/1000).also { binding.textView3.text = it }
+                }
 
+                override fun onFinish() {
+                    // code to display next question
+                    TODO("Not yet implemented")
+                }
+
+            }
         }
+
 
         binding.radioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             if (binding.radioBtnCheck.isChecked) {
@@ -61,14 +67,18 @@ class SecondActivity : AppCompatActivity() {
             else {
 
                 // code to display next question
-
-                onStop()
-                onStart()
+                if (playMode == "1") {
+                    onStop()
+                    onStart()
+                }
             }
         }
 
         binding.btnExit.setOnClickListener {
             score = 0
+            if (playMode == "1") {
+                onStop()
+            }
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
