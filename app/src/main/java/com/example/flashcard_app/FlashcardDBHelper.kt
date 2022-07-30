@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
@@ -224,5 +225,12 @@ class FlashcardDBHelper(context: Context) : SQLiteOpenHelper(context,DATABASE_NA
         cursor.close()
         db.close()
         return exists
+    }
+
+    fun getCount(tableName: String): Int {
+        val db = readableDatabase
+        val count = DatabaseUtils.queryNumEntries(db,tableName)
+        db.close()
+        return count.toInt()
     }
 }
