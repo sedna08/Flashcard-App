@@ -82,206 +82,21 @@
 
                 </LinearLayout>
 
-                <HorizontalScrollView
-                    android:id="@+id/hScrollView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scrollbarSize="0dp">
-
-                    <LinearLayout
-                        android:id="@+id/horizontal_cardLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cv1"
-                            android:layout_width="240dp"
-                            android:layout_height="300dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:backgroundTint="@color/pastel2"
-                            android:padding="30dp"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="5dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:orientation="vertical"
-                                android:padding="30dp"
-                                android:paddingBottom="15dp">
-
-                                <TextView
-                                    android:id="@+id/cv1Name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:breakStrategy="simple"
-                                    android:fontFamily="sans-serif-black"
-                                    android:includeFontPadding="false"
-                                    android:text="@string/placeholderTitle"
-                                    android:textColor="@color/black"
-                                    android:textSize="32sp"
-                                    app:autoSizeTextType="uniform" />
-
-                                <TextView
-                                    android:id="@+id/cv1Num"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/placeholderNumOfCards"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cv2"
-                            android:layout_width="240dp"
-                            android:layout_height="300dp"
-                            android:layout_margin="10dp"
-                            android:backgroundTint="@color/pastel3"
-                            android:padding="30dp"
-                            android:visibility="visible"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="5dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:orientation="vertical"
-                                android:padding="30dp"
-                                android:paddingBottom="15dp">
-
-                                <TextView
-                                    android:id="@+id/cv2Name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:autoText="false"
-                                    android:fontFamily="sans-serif-black"
-                                    android:text="@string/placeholderTitle"
-                                    android:textColor="@color/black"
-                                    android:textSize="32sp"
-                                    app:autoSizeTextType="uniform" />
-
-                                <TextView
-                                    android:id="@+id/cv2Num"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/placeholderNumOfCards"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cv3"
-                            android:layout_width="240dp"
-                            android:layout_height="300dp"
-                            android:layout_margin="10dp"
-                            android:backgroundTint="@color/pastel4"
-                            android:padding="30dp"
-                            android:visibility="visible"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="5dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:orientation="vertical"
-                                android:padding="30dp"
-                                android:paddingBottom="15dp">
-
-                                <TextView
-                                    android:id="@+id/cv3Name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:autoText="false"
-                                    android:fontFamily="sans-serif-black"
-                                    android:text="@string/placeholderTitle"
-                                    android:textColor="@color/black"
-                                    android:textSize="32sp"
-                                    app:autoSizeTextType="uniform" />
-
-                                <TextView
-                                    android:id="@+id/cv3Num"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/placeholderNumOfCards"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <ImageButton
-                            android:id="@+id/b1Add"
-                            style="@android:style/Widget.Holo.Light.ImageButton"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#00FFFFFF"
-                            android:scaleType="centerInside"
-                            app:srcCompat="@drawable/add" />
-
-                    </LinearLayout>
-                </HorizontalScrollView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_height="20dp"
                     android:background="@drawable/layout_curvetop"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:background="@color/white1"
                     android:orientation="vertical"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingBottom="30dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textViewCards"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:breakStrategy="simple"
-                            android:fontFamily="sans-serif-black"
-                            android:includeFontPadding="false"
-                            android:text="@string/flashcard"
-                            android:textColor="@color/black"
-                            android:textSize="32sp"
-                            app:autoSizeTextType="uniform"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="100"
-                        android:singleLine="false"
-                        android:text="@string/placeholderText" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -318,7 +133,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvSets"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="500dp"
                         tools:layout_conversion_absoluteHeight="189dp"
                         tools:layout_conversion_absoluteWidth="371dp"
                         tools:layout_editor_absoluteX="20dp"
