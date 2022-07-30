@@ -22,15 +22,17 @@ import com.google.android.material.chip.Chip
 class MainActivity : AppCompatActivity() {
 
     // declaration of variable for database handler/helper
-    private lateinit var flashcardDBHelper : FlashcardDBHelper
-    private  var flashcardsetList = ArrayList<String>()
-    private  var cardCountList = ArrayList<String>()
+    companion object {
+        lateinit var flashcardDBHelper : FlashcardDBHelper
+        var flashcardsetList = ArrayList<String>()
+        var cardCountList = ArrayList<String>()
+    }
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecyclerAdapterMain.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        getSupportActionBar()?.hide();
+        getSupportActionBar()?.hide()
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -57,11 +59,8 @@ class MainActivity : AppCompatActivity() {
         binding.rvSets.adapter = adapter
 
         // check card view
-        checkHCardView(binding, setList, numOfCardsList)
+        checkHCardView(binding, flashcardsetList, cardCountList)
         */
-
-        // Add button 1
-        binding.b1Add.setOnClickListener() { createSet(binding) }
 
         // Add button 2
         binding.b2Add.setOnClickListener() { createSet(binding) }
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity() {
 
     fun viewSets(binding: ActivityMainBinding) {
         binding.rvSets.visibility = View.GONE
-        binding.hScrollView.visibility = View.GONE
         val setNames = ArrayList<String>()
         val setCounts = ArrayList<String>()
         var setNum: Int
@@ -110,10 +108,7 @@ class MainActivity : AppCompatActivity() {
         adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList)
         binding.rvSets.adapter = adapter
 
-        checkHCardView(binding, flashcardsetList, cardCountList)
-
         binding.rvSets.visibility = View.VISIBLE
-        binding.hScrollView.visibility = View.VISIBLE
     }
 
     fun createSet(binding: ActivityMainBinding) {
@@ -134,9 +129,10 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Set Name is taken", Toast.LENGTH_SHORT).show()
                 }
                 else if(exists == 0) {
-                    mAlertDialog.dismiss()
                     val result = flashcardDBHelper.insertSet(FlashcardSetModel(input.lowercase()))
                     Toast.makeText(this, "Added Set: $result", Toast.LENGTH_SHORT).show()
+                    viewSets(binding)
+                    mAlertDialog.dismiss()
                 }
                 /* // original code
                 mAlertDialog.dismiss()
@@ -160,42 +156,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Clicked CANCEL", Toast.LENGTH_SHORT).show()
         }
 
-        viewSets(binding)
 
-    }
-
-    fun checkHCardView(binding: ActivityMainBinding, setList: ArrayList<String>, numOfCardsList: ArrayList<String>) {
-        var numOfSets = setList.count()
-        when (numOfSets) {
-            0 -> {
-                //binding.hScrollView.visibility = View.GONE
-                binding.cv2.visibility = View.GONE
-                binding.cv3.visibility = View.GONE
-                binding.cv1Name.text = "No Sets Added Yet"
-                binding.cv1Num.text = ""
-            }
-            1 -> {
-                binding.cv2.visibility = View.GONE
-                binding.cv3.visibility = View.GONE
-                binding.cv1Name.text = setList[0]
-                binding.cv1Num.text = numOfCardsList[0]
-            }
-            2 -> {
-                binding.cv3.visibility = View.GONE
-                binding.cv1Name.text = setList[0]
-                binding.cv1Num.text = numOfCardsList[0]
-                binding.cv2Name.text = setList[1]
-                binding.cv2Num.text = numOfCardsList[1]
-            }
-            else -> {
-                binding.cv1Name.text = setList[0]
-                binding.cv1Num.text = numOfCardsList[0]
-                binding.cv2Name.text = setList[1]
-                binding.cv2Num.text = numOfCardsList[1]
-                binding.cv3Name.text = setList[2]
-                binding.cv3Num.text = numOfCardsList[2]
-            }
-        }
     }
 
 }
@@ -230,10 +191,18 @@ class RecyclerAdapterMain(
                 //
             }
             cDeleteSet.setOnClickListener {
-                Toast.makeText(itemView.context, "You removed card no $adapterPosition", Toast.LENGTH_SHORT).show()
+
+                /*
                 setList.removeAt(adapterPosition)
                 mumOfCardsList.removeAt(adapterPosition)
                 notifyItemRemoved(adapterPosition)
+                 */
+                var tableName = setList[adapterPosition]
+                setList.removeAt(adapterPosition)
+                mumOfCardsList.removeAt(adapterPosition)
+                notifyItemRemoved(adapterPosition)
+                val result = MainActivity.flashcardDBHelper.deleteSet(tableName.lowercase())
+                Toast.makeText(itemView.context, "You removed card: " + tableName + " result: $result", Toast.LENGTH_SHORT).show()
             }
             cPlaySet.setOnClickListener {
 
