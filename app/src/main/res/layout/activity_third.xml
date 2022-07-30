@@ -1,88 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ThirdActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="25dp">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="25dp">
 
             <LinearLayout
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Set N Title"
-                    android:textColor="@color/black"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    tools:layout_conversion_absoluteHeight="43dp"
-                    tools:layout_conversion_absoluteWidth="371dp"
-                    tools:layout_editor_absoluteX="20dp"
-                    tools:layout_editor_absoluteY="20dp" />
-
-                <TextView
-                    android:id="@+id/tvNumberOfCards"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="69 cards" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/add" />
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/iconplay" />
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Set N Title"
+                        android:textColor="@color/black"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvNumberOfCards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="69 cards" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:minWidth="50dp"
+                        android:minHeight="50dp"
+                        android:scaleType="fitCenter"
+                        android:soundEffectsEnabled="true"
+                        app:srcCompat="@drawable/add" />
+
+                    <ImageButton
+                        android:id="@+id/btnPlay"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:minWidth="50dp"
+                        android:minHeight="50dp"
+                        android:scaleType="fitCenter"
+                        android:soundEffectsEnabled="true"
+                        app:srcCompat="@drawable/iconplay" />
+                </LinearLayout>
+
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvQuestions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout_conversion_absoluteHeight="189dp"
-            tools:layout_conversion_absoluteWidth="371dp"
-            tools:layout_editor_absoluteX="20dp"
-            tools:layout_editor_absoluteY="83dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

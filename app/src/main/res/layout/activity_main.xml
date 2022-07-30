@@ -14,7 +14,11 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -23,7 +27,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -82,26 +86,60 @@
 
                 </LinearLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSetsHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible">
+
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/layout_curvetop"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal">
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/white1"
+                    android:minHeight="560dp"
                     android:orientation="vertical"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingBottom="30dp">
 
+                    <TextView
+                        android:id="@+id/textViewCards"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:breakStrategy="simple"
+                        android:fontFamily="sans-serif-black"
+                        android:includeFontPadding="false"
+                        android:text="@string/flashcard"
+                        android:textColor="@color/black"
+                        android:textSize="32sp"
+                        app:autoSizeTextType="uniform" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="100"
+                        android:singleLine="false"
+                        android:text="@string/placeholderText" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -124,17 +162,18 @@
                             android:layout_height="50dp"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="0.3"
+                            android:background="?attr/selectableItemBackgroundBorderless"
                             android:backgroundTint="#00FFFFFF"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitCenter"
                             app:srcCompat="@drawable/add"
                             tools:ignore="SpeakableTextPresentCheck" />
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvSets"
+                        android:id="@+id/rvSetsVertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="500dp"
+                        android:visibility="visible"
                         tools:layout_conversion_absoluteHeight="189dp"
                         tools:layout_conversion_absoluteWidth="371dp"
                         tools:layout_editor_absoluteX="20dp"
@@ -144,6 +183,7 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
     </LinearLayout>
 
 
