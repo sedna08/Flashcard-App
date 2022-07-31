@@ -64,15 +64,16 @@ class ThirdActivity : AppCompatActivity() {
             mDialogView.btnSubmit.setOnClickListener {
                 Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
                 // Code for submit button
-                val inputQ = mDialogView.editTextQuestion.text.toString()
-                val inputA = mDialogView.editTextAnswer.text.toString()
+                var inputQ = mDialogView.editTextQuestion.text.toString()
+                var inputA = mDialogView.editTextAnswer.text.toString()
                 if(inputQ.trim().isNotEmpty() && inputQ.trim().isNotBlank() && inputA.trim().isNotEmpty() &&  inputA.trim().isNotBlank()) {
-                    val exists = flashcardDBHelper.readQuestion(inputQ.lowercase(),tableName)
+                    inputQ = normalizeInput(inputQ)
+                    val exists = flashcardDBHelper.readQuestion(inputQ,tableName)
                     if(exists != 0) {
                         Toast.makeText(this, "Question already exists", Toast.LENGTH_SHORT).show()
                     }
                     else if(exists == 0) {
-                        val result = flashcardDBHelper.insertQuestion(FlashcardModel(inputQ.lowercase(),inputA.lowercase()),tableName)
+                        val result = flashcardDBHelper.insertQuestion(FlashcardModel(inputQ,inputA),tableName)
                         Toast.makeText(this, "Added Question: $result", Toast.LENGTH_SHORT).show()
                         viewContents(binding)
                         mAlertDialog.dismiss()
@@ -133,8 +134,6 @@ class ThirdActivity : AppCompatActivity() {
 
     }
 
-
-
     fun viewContents(binding: ActivityThirdBinding) {
         binding.rvQuestions.visibility = View.GONE
         var setQuestions = ArrayList<String>()
@@ -173,6 +172,10 @@ class ThirdActivity : AppCompatActivity() {
         binding.rvQuestions.adapter = adapter
         binding.rvQuestions.visibility = View.VISIBLE
 
+    }
+
+    private fun normalizeInput(input: String): String {
+        return input.trim().lowercase().replace("\\s".toRegex(),"_").replaceFirstChar {it.uppercase()}
     }
 }
 

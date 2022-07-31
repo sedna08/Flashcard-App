@@ -109,19 +109,33 @@ class MainActivity : AppCompatActivity() {
 
         // Add Button in Alert Dialog is clicked
         mDialogView.btnSubmit.setOnClickListener {
-            val input = mDialogView.etNewName.text.toString()
+            var input = mDialogView.etNewName.text.toString()
             if(input.trim().isNotEmpty() && input.trim().isNotBlank()) {
-                val exists = flashcardDBHelper.readSet(input.lowercase())
-                if(exists != 0) {
-                    mDialogView.tilNewName.setError("Set Name Taken")
-                    Toast.makeText(this, "Set Name is taken", Toast.LENGTH_SHORT).show()
+                if(checkInput(input)) {
+                    input = normalizeInput(input)
+                    val exists = flashcardDBHelper.readSet(input)
+                    if(exists != 0) {
+                        mDialogView.tilNewName.setError("Set Name Taken")
+                        Toast.makeText(this, "Set Name is taken", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(exists == 0) {
+                        val result = flashcardDBHelper.insertSet(FlashcardSetModel(input))
+                        if(result) {
+                            Toast.makeText(this, "Successfully added set", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
+                            Toast.makeText(this, "Failed to add set", Toast.LENGTH_SHORT).show()
+                        }
+
+                        viewSets(binding)
+                        mAlertDialog.dismiss()
+                    }
                 }
-                else if(exists == 0) {
-                    val result = flashcardDBHelper.insertSet(FlashcardSetModel(input.lowercase()))
-                    Toast.makeText(this, "Added Set: $result", Toast.LENGTH_SHORT).show()
-                    viewSets(binding)
-                    mAlertDialog.dismiss()
+                else {
+                    Toast.makeText(this, "Set Name not Acceptable", Toast.LENGTH_SHORT).show()
                 }
+
+
             }
             else {
                 mDialogView.tilNewName.error = "Empty field"
@@ -133,6 +147,22 @@ class MainActivity : AppCompatActivity() {
             mAlertDialog.dismiss()
             Toast.makeText(this, "Clicked CANCEL", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun checkInput(input: String): Boolean {
+        var result = false
+        val checkThis = input.trim().take(7).lowercase()
+        if(checkThis == "sqlite_" || checkThis == "sqlite ")
+            result = false
+        else{
+            val firstChar = input.trim().get(0)
+            result = firstChar.isLetter()
+        }
+        return result
+    }
+
+    private fun normalizeInput(input: String): String {
+        return input.trim().lowercase().replace("\\s".toRegex(),"_").replaceFirstChar {it.uppercase()}
     }
 }
 
@@ -198,7 +228,7 @@ class RecyclerAdapterMain(
     override fun onBindViewHolder(holder:  RecyclerAdapterMain.ViewHolder, position: Int) {
         holder.tvSet.text = setList[position]
         holder.tvNumOfCards.text = mumOfCardsList[position]
-        holder.cvSet.setBackgroundColor(Color.parseColor(R.color.purple_200.toString()))
+        //holder.cvSet.setBackgroundColor(Color.parseColor(R.color.purple_200.toString()))
     }
 
     override fun getItemCount(): Int {

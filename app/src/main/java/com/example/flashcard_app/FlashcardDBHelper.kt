@@ -38,27 +38,38 @@ class FlashcardDBHelper(context: Context) : SQLiteOpenHelper(context,DATABASE_NA
 
     }
 
-    private fun createFlashcardSetTable(name: String) {
+    private fun createFlashcardSetTable(name: String): Boolean {
         val db = writableDatabase
-        val query = "CREATE TABLE IF NOT EXISTS " + name + "(" + FlashcardAppDBSchema.FlashcardEntity.COLUMN_QUESTION + " TEXT PRIMARY KEY, " + FlashcardAppDBSchema.FlashcardEntity.COLUMN_ANSWER + " TEXT);"
-        db.execSQL(query)
+        var result = true
+        try {
+            val query = "CREATE TABLE IF NOT EXISTS " + name + "(" + FlashcardAppDBSchema.FlashcardEntity.COLUMN_QUESTION + " TEXT PRIMARY KEY, " + FlashcardAppDBSchema.FlashcardEntity.COLUMN_ANSWER + " TEXT);"
+            db.execSQL(query)
+        } catch(e: SQLiteException) {
+            result = false
+        }
         db.close()
+        return result
     }
 
     @Throws(SQLiteConstraintException::class)
     fun insertSet(setModel: FlashcardSetModel): Boolean {
-        // Gets the data repository in write mode
-        val db = writableDatabase
         // Create a new map of values, where column names are the keys
         val values = ContentValues()
         values.put(FlashcardAppDBSchema.FlashcardSetEntity.COLUMN_NAME, setModel.topic)
 
-        // Insert the new row, returning the primary key value of the new row
-        val success = db.insert(FlashcardAppDBSchema.FlashcardSetEntity.TABLE_NAME, null, values)
+        val createResult = createFlashcardSetTable(setModel.topic)
 
-        db.close()
-        createFlashcardSetTable(setModel.topic)
-        return (Integer.parseInt("$success")!=-1)
+        if(createResult){
+            // Gets the data repository in write mode
+            val db = writableDatabase
+            // Insert the new row, returning the primary key value of the new row
+            val success = db.insert(FlashcardAppDBSchema.FlashcardSetEntity.TABLE_NAME, null, values)
+            db.close()
+            return (Integer.parseInt("$success") != -1)
+        }
+        else {
+            return false
+        }
     }
 
     @Throws(SQLiteConstraintException::class)
