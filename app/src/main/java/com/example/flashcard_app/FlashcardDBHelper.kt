@@ -149,8 +149,8 @@ class FlashcardDBHelper(context: Context) : SQLiteOpenHelper(context,DATABASE_NA
     }
 
     @SuppressLint("Range")
-    fun readAllQuestions(name: String): ArrayList<String>{
-        val questionList = ArrayList<String>()
+    fun readAllQuestions(name: String): ArrayList<FlashcardModel>{
+        val flashcardList = ArrayList<FlashcardModel>()
         val db = writableDatabase
         val cursor: Cursor?
         try {
@@ -159,16 +159,18 @@ class FlashcardDBHelper(context: Context) : SQLiteOpenHelper(context,DATABASE_NA
             return ArrayList()
         }
         var question: String
+        var answer: String
         if (cursor!!.moveToFirst()) {
             while (!cursor.isAfterLast) {
                 question = cursor.getString(cursor.getColumnIndex(FlashcardAppDBSchema.FlashcardEntity.COLUMN_QUESTION))
-                questionList.add(question)
+                answer = cursor.getString(cursor.getColumnIndex(FlashcardAppDBSchema.FlashcardEntity.COLUMN_ANSWER))
+                flashcardList.add(FlashcardModel(question,answer))
                 cursor.moveToNext()
             }
         }
         cursor.close()
         db.close()
-        return questionList
+        return flashcardList
     }
 
     @Throws(SQLiteConstraintException::class)

@@ -12,30 +12,47 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.flashcard_app.databinding.ActivityMainBinding
 import com.example.flashcard_app.databinding.ActivityThirdBinding
 import com.example.flashcard_app.databinding.AlertDialogAddCardBinding
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 
 class ThirdActivity : AppCompatActivity() {
+
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
+
+    // Declaration of variable for database handler/helper
+    companion object {
+        lateinit var flashcardDBHelper : FlashcardDBHelper
+        var questionList = ArrayList<String>()
+        var answerList = ArrayList<String>()
+        lateinit var numOfCards: String
+        lateinit var tableName: String
+        lateinit var binding: ActivityThirdBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
-        val binding = ActivityThirdBinding.inflate(layoutInflater)
+        binding = ActivityThirdBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // List for testing
-        val questions = arrayOf("What would you do If I kissed you right now?", "What is your biggest turn on?", "What is your biggest turn off?", "Do you prefer cuddling or kissing?", "What are your favourite pet names? Babe, Cutie etc.", "Want to know a secret?", "Would you ever have a sugar daddy?", "Who was your teacher crush?").toCollection(ArrayList<String>())
-        val answers = arrayOf("Answer 1", "Answer 2", "Answer 3", "Answer 4", "Answer 5", "Answer 6", "Answer 7", "Answer 8").toCollection(ArrayList<String>())
+        // Initializing database variable
+        flashcardDBHelper = FlashcardDBHelper(this)
 
-        // Load Recycler View
-        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        binding.rvQuestions.layoutManager = layoutManager
-        adapter = RecyclerAdapter(this, questions, answers)
-        binding.rvQuestions.adapter = adapter
+        val bundle: Bundle? = intent.extras
+        val num = bundle!!.getString("numOfCards")
+        numOfCards = num.toString()
+        val setName = bundle!!.getString("tableName")
+        tableName = setName.toString()
+
+        binding.tvTitle.text = tableName
+        binding.tvNumberOfCards.text = "Number of Cards : $numOfCards"
+
+
+        viewContents(binding)
 
         binding.btnSubmit.setOnClickListener {
             Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show()
@@ -46,8 +63,25 @@ class ThirdActivity : AppCompatActivity() {
 
             mDialogView.btnSubmit.setOnClickListener {
                 Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
-
                 // Code for submit button
+                val inputQ = mDialogView.editTextQuestion.text.toString()
+                val inputA = mDialogView.editTextAnswer.text.toString()
+                if(inputQ.trim().isNotEmpty() && inputQ.trim().isNotBlank() && inputA.trim().isNotEmpty() &&  inputA.trim().isNotBlank()) {
+                    val exists = flashcardDBHelper.readQuestion(inputQ.lowercase(),tableName)
+                    if(exists != 0) {
+                        Toast.makeText(this, "Question already exists", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(exists == 0) {
+                        val result = flashcardDBHelper.insertQuestion(FlashcardModel(inputQ.lowercase(),inputA.lowercase()),tableName)
+                        Toast.makeText(this, "Added Question: $result", Toast.LENGTH_SHORT).show()
+                        viewContents(binding)
+                        mAlertDialog.dismiss()
+                    }
+                }
+                else {
+                    Toast.makeText(this, "ERROR: EMPTY FIELD", Toast.LENGTH_SHORT).show()
+                }
+
             }
             mDialogView.btnCancel.setOnClickListener {
                 mAlertDialog.dismiss()
@@ -98,7 +132,48 @@ class ThirdActivity : AppCompatActivity() {
         }
 
     }
+
+    fun viewContents(binding: ActivityThirdBinding) {
+        binding.rvQuestions.visibility = View.GONE
+        var setQuestions = ArrayList<String>()
+        var setAnswers = ArrayList<String>()
+        var setNum: Int
+        val flashcards = flashcardDBHelper.readAllQuestions(tableName)
+
+
+        if(flashcards.isNotEmpty()) {
+            try {
+                flashcards.forEach {
+                    setQuestions.add(it.question)
+                    setAnswers.add(it.answer)
+                }
+                Toast.makeText(this,"Fetched Flashcards", Toast.LENGTH_SHORT).show()
+            } catch(e: Exception) {
+                Toast.makeText(this,"$e", Toast.LENGTH_SHORT).show()
+            }
+            questionList = setQuestions
+            answerList = setAnswers
+
+            setNum = flashcardDBHelper.getCount(tableName)
+        }
+        else {
+            questionList = setQuestions
+            answerList = setAnswers
+            setNum = 0
+            Toast.makeText(this,"No Questions Added", Toast.LENGTH_SHORT).show()
+        }
+        binding.tvNumberOfCards.text = "Number of Cards : " + setNum.toString()
+
+        // Load Recycler View
+        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.rvQuestions.layoutManager = layoutManager
+        adapter = RecyclerAdapter(this, questionList, answerList)
+        binding.rvQuestions.adapter = adapter
+        binding.rvQuestions.visibility = View.VISIBLE
+
+    }
 }
+
 
 class RecyclerAdapter(
     private val context: Activity,
@@ -124,10 +199,13 @@ class RecyclerAdapter(
                 Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
             }
             cDelete.setOnClickListener {
-                Toast.makeText(itemView.context, "You removed card no $adapterPosition", Toast.LENGTH_SHORT).show()
+                val result = ThirdActivity.flashcardDBHelper.deleteQuestion(questions[adapterPosition],ThirdActivity.tableName.lowercase())
                 questions.removeAt(adapterPosition)
                 answers.removeAt(adapterPosition)
                 notifyItemRemoved(adapterPosition)
+                val numOfCards = ThirdActivity.flashcardDBHelper.getCount(ThirdActivity.tableName.lowercase())
+                ThirdActivity.binding.tvNumberOfCards.text = "Number of Cards : " + numOfCards.toString()
+                Toast.makeText(itemView.context, "Removed question, result: $result", Toast.LENGTH_SHORT).show()
             }
             cEdit.setOnClickListener {
                 val mDialogView = AlertDialogAddCardBinding.inflate(context.layoutInflater)

@@ -38,28 +38,9 @@ class MainActivity : AppCompatActivity() {
         // Initializing database
         flashcardDBHelper = FlashcardDBHelper(this)
 
-        /*
-        // List for Sets
-        val setList = arrayOf("Set 1", "Set 2", "Set 3", "Set 4", "Set 5", "Set 6", "Set 7", "Set 8").toCollection(ArrayList<String>())
-        val numOfCardsList = arrayOf("Num of Cards: 1", "Num of Cards: 2", "Num of Cards: 3", "Num of Cards: 4", "Num of Cards: 5", "Num of Cards: 6", "Num of Cards: 7", "Num of Cards: 8").toCollection(ArrayList<String>())
-        // Horizontal Panning Cards
-        */
 
         viewSets(binding)
 
-        /*
-        val setList = ArrayList<String>()
-        val numOfCardsList = ArrayList<String>()
-
-        layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        binding.rvSets.layoutManager = layoutManager
-
-        adapter = RecyclerAdapterMain(this, setList, numOfCardsList)
-        binding.rvSets.adapter = adapter
-
-        // check card view
-        checkHCardView(binding, flashcardsetList, cardCountList)
-        */
 
         // Add button 2
         binding.b2Add.setOnClickListener() { createSet(binding) }
@@ -140,18 +121,6 @@ class MainActivity : AppCompatActivity() {
                     viewSets(binding)
                     mAlertDialog.dismiss()
                 }
-                /*
-                // Original code
-                mAlertDialog.dismiss()
-                // Get text from EditText of Custom Layout
-                val newName = mDialogView.etNewName.text.toString()
-                val result = questionSetDBHelper.updateSet(newName,tableName)
-                if(result) {
-                    binding.tvSetName.text = newName
-                    tableName = newName
-                    binding.lvQuestionsList.visibility = View.GONE
-                }
-                */
             }
             else {
                 mDialogView.tilNewName.error = "Empty field"
@@ -192,13 +161,17 @@ class RecyclerAdapterMain(
 
             itemView.setOnClickListener {
                 // Go to third view
+                val tableName = setList[adapterPosition]
+                val numOfCards =  mumOfCardsList[adapterPosition]
                 Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
                 val intent = Intent(itemView.context, ThirdActivity::class.java)
+                intent.putExtra("tableName",tableName)
+                intent.putExtra("numOfCards",numOfCards)
                 itemView.context.startActivity(intent)
             }
             cDeleteSet.setOnClickListener {
 
-                var tableName = setList[adapterPosition]
+                val tableName = setList[adapterPosition]
                 setList.removeAt(adapterPosition)
                 mumOfCardsList.removeAt(adapterPosition)
                 notifyItemRemoved(adapterPosition)
