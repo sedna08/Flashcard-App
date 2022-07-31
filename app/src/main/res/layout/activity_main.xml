@@ -90,8 +90,6 @@
                     android:id="@+id/rvSetsHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:nestedScrollingEnabled="false"
                     android:visibility="visible">
 
                 </androidx.recyclerview.widget.RecyclerView>

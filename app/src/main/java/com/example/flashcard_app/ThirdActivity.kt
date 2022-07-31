@@ -3,6 +3,9 @@ package com.example.flashcard_app
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.InsetDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +20,7 @@ import com.example.flashcard_app.databinding.ActivityThirdBinding
 import com.example.flashcard_app.databinding.AlertDialogAddCardBinding
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import kotlin.random.Random
 
 class ThirdActivity : AppCompatActivity() {
 
@@ -60,6 +64,9 @@ class ThirdActivity : AppCompatActivity() {
             val mDialogView = AlertDialogAddCardBinding.inflate(layoutInflater)
             val mBuilder = AlertDialog.Builder(this).setView(mDialogView.root)
             val mAlertDialog = mBuilder.show()
+            val back = ColorDrawable(Color.TRANSPARENT)
+            val inset = InsetDrawable(back, 20)
+            mAlertDialog.window?.setBackgroundDrawable(inset)
 
             mDialogView.btnSubmit.setOnClickListener {
                 Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
@@ -141,7 +148,6 @@ class ThirdActivity : AppCompatActivity() {
         var setNum: Int
         val flashcards = flashcardDBHelper.readAllQuestions(tableName)
 
-
         if(flashcards.isNotEmpty()) {
             try {
                 flashcards.forEach {
@@ -200,41 +206,67 @@ class RecyclerAdapter(
             cEdit = itemView.findViewById(R.id.cEdit)
             cDelete = itemView.findViewById(R.id.cDelete)
 
-            itemView.setOnClickListener {
-                Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
+            ProcessClickCard(itemView)
+            ProcessDeleteCard(itemView)
+            ProcessEditCard(itemView)
+        }
+    }
+
+    private fun ViewHolder.ProcessClickCard(itemView: View) {
+        itemView.setOnClickListener {
+            Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+    private fun ViewHolder.ProcessDeleteCard(itemView: View) {
+        cDelete.setOnClickListener {
+            val result = ThirdActivity.flashcardDBHelper.deleteQuestion(
+                questions[adapterPosition],
+                ThirdActivity.tableName.lowercase()
+            )
+            questions.removeAt(adapterPosition)
+            answers.removeAt(adapterPosition)
+            notifyItemRemoved(adapterPosition)
+            val numOfCards =
+                ThirdActivity.flashcardDBHelper.getCount(ThirdActivity.tableName.lowercase())
+            ThirdActivity.binding.tvNumberOfCards.text =
+                "Number of Cards : " + numOfCards.toString()
+            Toast.makeText(
+                itemView.context,
+                "Removed question, result: $result",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun ViewHolder.ProcessEditCard(itemView: View) {
+        cEdit.setOnClickListener {
+            val mDialogView = AlertDialogAddCardBinding.inflate(context.layoutInflater)
+            val mBuilder = AlertDialog.Builder(context).setView(mDialogView.root)
+            val mAlertDialog = mBuilder.show()
+            val back = ColorDrawable(Color.TRANSPARENT)
+            val inset = InsetDrawable(back, 20)
+            mAlertDialog.window?.setBackgroundDrawable(inset)
+
+            // Set edit text field values
+            mDialogView.tvCardTitle.setText("Edit this card")
+            mDialogView.editTextAnswer.setText(answers[adapterPosition])
+            mDialogView.editTextQuestion.setText(questions[adapterPosition])
+
+            // Click listeners
+            mDialogView.btnSubmit.setOnClickListener {
+                Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
+
+                // Code for submit button
+                questions.set(adapterPosition, "String")
+                notifyDataSetChanged()
             }
-            cDelete.setOnClickListener {
-                val result = ThirdActivity.flashcardDBHelper.deleteQuestion(questions[adapterPosition],ThirdActivity.tableName.lowercase())
-                questions.removeAt(adapterPosition)
-                answers.removeAt(adapterPosition)
-                notifyItemRemoved(adapterPosition)
-                val numOfCards = ThirdActivity.flashcardDBHelper.getCount(ThirdActivity.tableName.lowercase())
-                ThirdActivity.binding.tvNumberOfCards.text = "Number of Cards : " + numOfCards.toString()
-                Toast.makeText(itemView.context, "Removed question, result: $result", Toast.LENGTH_SHORT).show()
-            }
-            cEdit.setOnClickListener {
-                val mDialogView = AlertDialogAddCardBinding.inflate(context.layoutInflater)
-                val mBuilder = AlertDialog.Builder(context).setView(mDialogView.root)
-                val mAlertDialog = mBuilder.show()
+            mDialogView.btnCancel.setOnClickListener {
+                mAlertDialog.dismiss()
+                Toast.makeText(itemView.context, "Cancel", Toast.LENGTH_SHORT).show()
 
-                // Set edit text field values
-                mDialogView.editTextAnswer.setText(answers[adapterPosition])
-                mDialogView.editTextQuestion.setText(questions[adapterPosition])
-
-                // Click listeners
-                mDialogView.btnSubmit.setOnClickListener {
-                    Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
-
-                    // Code for submit button
-                    questions.set(adapterPosition, "String")
-                    notifyDataSetChanged()
-                }
-                mDialogView.btnCancel.setOnClickListener {
-                    mAlertDialog.dismiss()
-                    Toast.makeText(itemView.context, "Cancel", Toast.LENGTH_SHORT).show()
-
-                    // Code for cancel button
-                }
+                // Code for cancel button
             }
         }
     }

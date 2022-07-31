@@ -3,6 +3,8 @@ package com.example.flashcard_app
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.InsetDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,11 +15,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.flashcard_app.ThirdActivity.Companion.binding
 import com.example.flashcard_app.databinding.ActivityMainBinding
 import com.example.flashcard_app.databinding.AlertDialogAddSetBinding
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import kotlin.random.Random
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             binding.rvSetsVertical.setOnScrollChangeListener { view, i, i2, i3, i4 ->
                 Toast.makeText(this, "vertical change", Toast.LENGTH_SHORT).show()
                 binding.rvSetsHorizontal.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-                binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3)
+                binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3, true)
             }
         }
     }
@@ -91,11 +94,11 @@ class MainActivity : AppCompatActivity() {
 
         // Load Vertical Recycler View
         binding.rvSetsVertical.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        binding.rvSetsVertical.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_vertical_set_layout, flashcardsetList.size)
+        binding.rvSetsVertical.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_vertical_set_layout, flashcardsetList.size, false)
         binding.rvSetsVertical.visibility = View.VISIBLE
         // Load Horizontal Recycler View
         binding.rvSetsHorizontal.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-        binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3)
+        binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3, true)
         Toast.makeText(this, "shit", Toast.LENGTH_SHORT).show()
         
     }
@@ -106,6 +109,9 @@ class MainActivity : AppCompatActivity() {
         val mBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
             .setView(mDialogView.root)
         val mAlertDialog = mBuilder.show()
+        val back = ColorDrawable(Color.TRANSPARENT)
+        val inset = InsetDrawable(back, 20)
+        mAlertDialog.window?.setBackgroundDrawable(inset)
 
         // Add Button in Alert Dialog is clicked
         mDialogView.btnSubmit.setOnClickListener {
@@ -171,7 +177,8 @@ class RecyclerAdapterMain(
     private val setList: ArrayList<String>,
     private val mumOfCardsList: ArrayList<String>,
     private val layout: Int,
-    private val displayLimit: Int
+    private val displayLimit: Int,
+    private val randomColors: Boolean
 ) : RecyclerView.Adapter<RecyclerAdapterMain.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -228,10 +235,26 @@ class RecyclerAdapterMain(
     override fun onBindViewHolder(holder:  RecyclerAdapterMain.ViewHolder, position: Int) {
         holder.tvSet.text = setList[position]
         holder.tvNumOfCards.text = mumOfCardsList[position]
-        //holder.cvSet.setBackgroundColor(Color.parseColor(R.color.purple_200.toString()))
+        if (randomColors) {
+            // Set background
+            val color = generateRandomColor()
+            holder.cvSet.setCardBackgroundColor(color)
+        }
     }
 
     override fun getItemCount(): Int {
         return if (setList.size > displayLimit) displayLimit else setList.size
+    }
+
+    private fun generateRandomColor(): Int {
+        // Generate random pastel color
+        val baseColor = Color.WHITE
+        val baseRed = Color.red(baseColor)
+        val baseGreen = Color.green(baseColor)
+        val baseBlue = Color.blue(baseColor)
+        val red: Int = (baseRed + Random.nextInt(256)) / 2
+        val green: Int = (baseGreen + Random.nextInt(256)) / 2
+        val blue: Int = (baseBlue + Random.nextInt(256)) / 2
+        return Color.rgb(red, green, blue)
     }
 }
