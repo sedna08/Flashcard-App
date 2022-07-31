@@ -2,6 +2,7 @@ package com.example.flashcard_app
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +13,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.flashcard_app.ThirdActivity.Companion.binding
 import com.example.flashcard_app.databinding.ActivityMainBinding
 import com.example.flashcard_app.databinding.AlertDialogAddSetBinding
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     // Declaration of variable for database handler/helper
     companion object {
@@ -26,21 +30,21 @@ class MainActivity : AppCompatActivity() {
         var cardCountList = ArrayList<String>()
     }
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<RecyclerAdapterMain.ViewHolder>? = null
+    override fun onRestart() {
+        super.onRestart()
+        viewSets(binding)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getSupportActionBar()?.hide()
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Initializing database
         flashcardDBHelper = FlashcardDBHelper(this)
 
-
         viewSets(binding)
-
 
         // Add button 2
         binding.b2Add.setOnClickListener() { createSet(binding) }
@@ -85,14 +89,11 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,"No Sets Added", Toast.LENGTH_SHORT).show()
         }
 
-        // Load Recycler View
-        layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_vertical_set_layout, flashcardsetList.size)
-
+        // Load Vertical Recycler View
         binding.rvSetsVertical.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.rvSetsVertical.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_vertical_set_layout, flashcardsetList.size)
         binding.rvSetsVertical.visibility = View.VISIBLE
-
+        // Load Horizontal Recycler View
         binding.rvSetsHorizontal.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3)
         Toast.makeText(this, "shit", Toast.LENGTH_SHORT).show()
@@ -197,6 +198,7 @@ class RecyclerAdapterMain(
     override fun onBindViewHolder(holder:  RecyclerAdapterMain.ViewHolder, position: Int) {
         holder.tvSet.text = setList[position]
         holder.tvNumOfCards.text = mumOfCardsList[position]
+        holder.cvSet.setBackgroundColor(Color.parseColor(R.color.purple_200.toString()))
     }
 
     override fun getItemCount(): Int {

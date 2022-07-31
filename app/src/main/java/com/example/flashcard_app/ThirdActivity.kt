@@ -133,6 +133,8 @@ class ThirdActivity : AppCompatActivity() {
 
     }
 
+
+
     fun viewContents(binding: ActivityThirdBinding) {
         binding.rvQuestions.visibility = View.GONE
         var setQuestions = ArrayList<String>()
