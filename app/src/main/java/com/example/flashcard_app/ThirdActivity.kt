@@ -105,7 +105,7 @@ class ThirdActivity : AppCompatActivity() {
             val items: Array<String> = resources.getStringArray(R.array.alert_list)
             var checkItem: Int = 0
             var selectedMode: String
-            var mode = 0
+            lateinit var mode: String
             AlertDialog.Builder(this)
                 .setTitle("Timed Mode?")
                 .setSingleChoiceItems(items, checkItem) { dialog, which ->
@@ -116,11 +116,11 @@ class ThirdActivity : AppCompatActivity() {
 
                     if (selectedMode == "Yes") {
                         Toast.makeText(this, "Timed Mode", Toast.LENGTH_SHORT).show()
-                        mode = 1
+                        mode = "1"
                     }
                     else if (selectedMode == "No") {
                         Toast.makeText(this, "Casual Mode", Toast.LENGTH_SHORT).show()
-                        mode = 0
+                        mode = "0"
                     }
 
                 }
@@ -130,6 +130,7 @@ class ThirdActivity : AppCompatActivity() {
 
                     val intent = Intent(this, SecondActivity::class.java)
                     intent.putExtra("user_mode", mode)
+                    intent.putExtra("tableName",tableName)
                     startActivity(intent)
                 }
                 .setNegativeButton("CANCEL") { dialog, which ->
@@ -257,9 +258,34 @@ class RecyclerAdapter(
             // Click listeners
             mDialogView.btnSubmit.setOnClickListener {
                 Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
+                var inputQ = mDialogView.editTextQuestion.text.toString()
+                var inputA = mDialogView.editTextAnswer.text.toString()
+                if(inputQ.trim().isNotEmpty() && inputQ.trim().isNotBlank() && inputA.trim().isNotEmpty() &&  inputA.trim().isNotBlank()) {
+                    inputQ = normalizeInput(inputQ)
+                    val exists = ThirdActivity.flashcardDBHelper.readQuestion(inputQ,ThirdActivity.tableName)
+                    if(exists != 0) {
+                        Toast.makeText(itemView.context, "Question already exists", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(exists == 0) {
+                        val result = ThirdActivity.flashcardDBHelper.updateQuestion(inputQ,inputA,questions[adapterPosition],ThirdActivity.tableName)
+                        if(result) {
+                            Toast.makeText(itemView.context, "Successfully Updated Flashcard", Toast.LENGTH_SHORT).show()
+                            questions.set(adapterPosition, inputQ)
+                            answers.set(adapterPosition, inputA)
+                            mAlertDialog.dismiss()
+                        }
+                        else{
+                            Toast.makeText(itemView.context, "Failed to Update Flashcard", Toast.LENGTH_SHORT).show()
+                            mAlertDialog.dismiss()
+                        }
+                    }
+
+                }
+                else {
+                    Toast.makeText(itemView.context, "ERROR: EMPTY FIELD", Toast.LENGTH_SHORT).show()
+                }
 
                 // Code for submit button
-                questions.set(adapterPosition, "String")
                 notifyDataSetChanged()
             }
             mDialogView.btnCancel.setOnClickListener {
@@ -269,6 +295,10 @@ class RecyclerAdapter(
                 // Code for cancel button
             }
         }
+    }
+
+    private fun normalizeInput(input: String): String {
+        return input.trim().lowercase().replace("\\s".toRegex(),"_").replaceFirstChar {it.uppercase()}
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
