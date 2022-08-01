@@ -149,12 +149,12 @@ class FlashcardDBHelper(context: Context) : SQLiteOpenHelper(context,DATABASE_NA
         return questionSets
     }
 
-    fun updateQuestion(newQuestion: String, newAnswer: String, oldQuestion: String): Boolean {
+    fun updateQuestion(newQuestion: String, newAnswer: String, oldQuestion: String, tableName: String): Boolean {
         val db = writableDatabase
         val values = ContentValues()
         values.put(FlashcardAppDBSchema.FlashcardEntity.COLUMN_QUESTION, newQuestion)
         values.put(FlashcardAppDBSchema.FlashcardEntity.COLUMN_ANSWER, newAnswer)
-        val success = db.update(FlashcardAppDBSchema.FlashcardSetEntity.TABLE_NAME, values, "" + FlashcardAppDBSchema.FlashcardEntity.COLUMN_QUESTION +  " = ?", arrayOf(oldQuestion))
+        val success = db.update(tableName, values, "" + FlashcardAppDBSchema.FlashcardEntity.COLUMN_QUESTION +  " = ?", arrayOf(oldQuestion))
         db.close()
         return (Integer.parseInt("$success")!= 0)
     }
