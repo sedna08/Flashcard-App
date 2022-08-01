@@ -21,15 +21,14 @@ class SecondActivity : AppCompatActivity() {
         lateinit var binding: ActivitySecondBinding
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        getContents(binding)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initializing database variable
+        flashcardDBHelper = FlashcardDBHelper(this)
 
         var score = 0
         val bundle: Bundle? = intent.extras
@@ -41,7 +40,7 @@ class SecondActivity : AppCompatActivity() {
 
 
         // code to display 1st question here
-        binding.tvCardInstruction.text = questionList.get(0).toString()
+        binding.tvCardInstruction.text = questionList.get(0)
 
         // to access answer "nth" answer
         // answerList.get(n).toString()
@@ -64,7 +63,8 @@ class SecondActivity : AppCompatActivity() {
 
                 override fun onFinish() {
                     // code to display next question
-                    TODO("Not yet implemented")
+                    binding.textView2.text = answerList.get(0) // remove this
+                    // Just play Sound here after time is done
                 }
 
             }
@@ -107,9 +107,12 @@ class SecondActivity : AppCompatActivity() {
             if (playMode == "1") {
                 onStop()
             }
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this,ThirdActivity::class.java)
+            intent.putExtra("tableName",tableName)
+            intent.putExtra("numOfCards",numOfCards)
             startActivity(intent)
         }
+
 
     }
 
@@ -141,6 +144,7 @@ class SecondActivity : AppCompatActivity() {
             setNum = 0
             Toast.makeText(this,"Empty Flashcard Set", Toast.LENGTH_SHORT).show()
         }
+
     }
 
     override fun onStart() {
@@ -152,5 +156,7 @@ class SecondActivity : AppCompatActivity() {
         super.onStop()
         timer.cancel()
     }
+
+
 
 }

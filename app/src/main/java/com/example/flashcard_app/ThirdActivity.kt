@@ -15,7 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.flashcard_app.databinding.ActivityMainBinding
 import com.example.flashcard_app.databinding.ActivityThirdBinding
 import com.example.flashcard_app.databinding.AlertDialogAddCardBinding
 import com.google.android.material.card.MaterialCardView
@@ -35,6 +34,10 @@ class ThirdActivity : AppCompatActivity() {
         lateinit var numOfCards: String
         lateinit var tableName: String
         lateinit var binding: ActivityThirdBinding
+    }
+    override fun onRestart() {
+        super.onRestart()
+        viewContents(binding)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,7 +108,7 @@ class ThirdActivity : AppCompatActivity() {
             val items: Array<String> = resources.getStringArray(R.array.alert_list)
             var checkItem: Int = 0
             var selectedMode: String
-            lateinit var mode: String
+            var mode = "1"
             AlertDialog.Builder(this)
                 .setTitle("Timed Mode?")
                 .setSingleChoiceItems(items, checkItem) { dialog, which ->
@@ -127,7 +130,6 @@ class ThirdActivity : AppCompatActivity() {
                 .setPositiveButton("OK") { dialog, which ->
                     //action code for positive response
                     Toast.makeText(this, "Starting Flashcards", Toast.LENGTH_SHORT).show()
-
                     val intent = Intent(this, SecondActivity::class.java)
                     intent.putExtra("user_mode", mode)
                     intent.putExtra("tableName",tableName)
