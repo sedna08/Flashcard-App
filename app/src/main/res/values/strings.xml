@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MYNAH</string>
+    <string name="app_name">Mynah</string>
     <string name="appSubtitle">Flash Card App</string>
     <string name="viewAll">View All</string>
     <string name="flashcard">Flashcards</string>
@@ -7,10 +7,10 @@
 
     <string name="placeholderTitle">The Title Placeholder</string>
     <string name="placeholderNumOfCards">-# of Cards-</string>
-    <string name="placeholderText">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat.
+    <string name="placeholderText">When it comes to reviewing concepts, nothing comes close to the
+        effectiveness of flashcards. Mynah can help you easily create flash cards with its intuitive design.
+        You can create, edit, and delete flash cards and arrange them in sets of you accrord. Create and review
+        now!
     </string>
 
     <string-array name="alert_list">

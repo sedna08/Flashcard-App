@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,181 +9,183 @@
     tools:context=".MainActivity">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:scrollbarSize="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarSize="0dp">
+            android:layout_height="0dp"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="false"
+                    android:cropToPadding="false"
+                    android:paddingTop="10dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/myna" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewAppName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:fontFamily="@font/bungee"
+                        android:includeFontPadding="false"
+                        android:shadowColor="@color/white1"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white1"
+                        android:textSize="34sp" />
+
+                    <TextView
+                        android:id="@+id/textViewAppName2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:includeFontPadding="false"
+                        android:shadowColor="@color/white1"
+                        android:text="@string/appSubtitle"
+                        android:textColor="@color/white1"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarSize="0dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:paddingLeft="20dp"
+                    android:paddingBottom="20dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvSetsHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="visible">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/layout_curvetop"
+                android:backgroundTint="@color/white1"
+                android:orientation="vertical"
+                android:padding="30dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textViewCards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    android:breakStrategy="simple"
+                    android:fontFamily="sans-serif-black"
+                    android:includeFontPadding="false"
+                    android:text="@string/flashcard"
+                    android:textColor="@color/black"
+                    android:textSize="32sp"
+                    app:autoSizeTextType="uniform" />
 
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:adjustViewBounds="false"
-                        android:cropToPadding="false"
-                        android:paddingTop="10dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/myna" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textViewAppName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="30dp"
-                            android:fontFamily="@font/bungee"
-                            android:includeFontPadding="false"
-                            android:shadowColor="@color/white1"
-                            android:text="@string/app_name"
-                            android:textColor="@color/white1"
-                            android:textSize="34sp" />
-
-                        <TextView
-                            android:id="@+id/textViewAppName2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="30dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:includeFontPadding="false"
-                            android:shadowColor="@color/white1"
-                            android:text="@string/appSubtitle"
-                            android:textColor="@color/white1"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvSetsHorizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:nestedScrollingEnabled="false"
-                    android:visibility="visible">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textView10"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/layout_curvetop"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:maxLines="100"
+                    android:singleLine="false"
+                    android:text="@string/placeholderText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white1"
-                    android:minHeight="560dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:paddingBottom="30dp">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewCards"
+                        android:id="@+id/textViewCards3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
                         android:breakStrategy="simple"
                         android:fontFamily="sans-serif-black"
                         android:includeFontPadding="false"
-                        android:text="@string/flashcard"
+                        android:text="@string/allFlashCards"
                         android:textColor="@color/black"
                         android:textSize="32sp"
                         app:autoSizeTextType="uniform" />
 
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="100"
-                        android:singleLine="false"
-                        android:text="@string/placeholderText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textViewCards3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:breakStrategy="simple"
-                            android:fontFamily="sans-serif-black"
-                            android:includeFontPadding="false"
-                            android:text="@string/allFlashCards"
-                            android:textColor="@color/black"
-                            android:textSize="32sp"
-                            app:autoSizeTextType="uniform" />
-
-                        <ImageButton
-                            android:id="@+id/b2Add"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="0.3"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:backgroundTint="#00FFFFFF"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/add"
-                            tools:ignore="SpeakableTextPresentCheck" />
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvSetsVertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        tools:layout_conversion_absoluteHeight="189dp"
-                        tools:layout_conversion_absoluteWidth="371dp"
-                        tools:layout_editor_absoluteX="20dp"
-                        tools:layout_editor_absoluteY="83dp" />
-
+                    <ImageButton
+                        android:id="@+id/b2Add"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.3"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:backgroundTint="#00FFFFFF"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/add"
+                        tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSetsVertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    tools:layout_conversion_absoluteHeight="189dp"
+                    tools:layout_conversion_absoluteWidth="371dp"
+                    tools:layout_editor_absoluteX="20dp"
+                    tools:layout_editor_absoluteY="83dp" />
 
-    </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

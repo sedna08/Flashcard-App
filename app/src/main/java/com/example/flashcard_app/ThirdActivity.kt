@@ -55,14 +55,14 @@ class ThirdActivity : AppCompatActivity() {
         viewContents(binding)
 
         binding.btnSubmit.setOnClickListener {
-            Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show()
 
             val mDialogView = AlertDialogAddCardBinding.inflate(layoutInflater)
             val mBuilder = AlertDialog.Builder(this).setView(mDialogView.root)
             val mAlertDialog = mBuilder.show()
 
             mDialogView.btnSubmit.setOnClickListener {
-                Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
                 // Code for submit button
                 var inputQ = mDialogView.editTextQuestion.text.toString()
                 var inputA = mDialogView.editTextAnswer.text.toString()
@@ -92,7 +92,7 @@ class ThirdActivity : AppCompatActivity() {
             }
         }
         binding.btnPlay.setOnClickListener {
-            Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show()
 
             // Code for play button
             val items: Array<String> = resources.getStringArray(R.array.alert_list)
@@ -148,7 +148,7 @@ class ThirdActivity : AppCompatActivity() {
                     setQuestions.add(it.question)
                     setAnswers.add(it.answer)
                 }
-                Toast.makeText(this,"Fetched Flashcards", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this,"Fetched Flashcards", Toast.LENGTH_SHORT).show()
             } catch(e: Exception) {
                 Toast.makeText(this,"$e", Toast.LENGTH_SHORT).show()
             }
@@ -201,7 +201,7 @@ class RecyclerAdapter(
             cDelete = itemView.findViewById(R.id.cDelete)
 
             itemView.setOnClickListener {
-                Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
             }
             cDelete.setOnClickListener {
                 val result = ThirdActivity.flashcardDBHelper.deleteQuestion(questions[adapterPosition],ThirdActivity.tableName.lowercase())
@@ -223,7 +223,7 @@ class RecyclerAdapter(
 
                 // Click listeners
                 mDialogView.btnSubmit.setOnClickListener {
-                    Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
 
                     // Code for submit button
                     questions.set(adapterPosition, "String")
@@ -231,7 +231,7 @@ class RecyclerAdapter(
                 }
                 mDialogView.btnCancel.setOnClickListener {
                     mAlertDialog.dismiss()
-                    Toast.makeText(itemView.context, "Cancel", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(itemView.context, "Cancel", Toast.LENGTH_SHORT).show()
 
                     // Code for cancel button
                 }

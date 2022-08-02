@@ -2,7 +2,6 @@ package com.example.flashcard_app
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +10,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.flashcard_app.ThirdActivity.Companion.binding
 import com.example.flashcard_app.databinding.ActivityMainBinding
 import com.example.flashcard_app.databinding.AlertDialogAddSetBinding
 import com.google.android.material.card.MaterialCardView
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         // Change listener for vertical recycler view
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             binding.rvSetsVertical.setOnScrollChangeListener { view, i, i2, i3, i4 ->
-                Toast.makeText(this, "vertical change", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "vertical change", Toast.LENGTH_SHORT).show()
                 binding.rvSetsHorizontal.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                 binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3)
             }
@@ -71,9 +70,9 @@ class MainActivity : AppCompatActivity() {
                 sets.forEach {
                     setNames.add(it)
                 }
-                Toast.makeText(this,"Fetched Question Sets", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this,"Fetched Question Sets", Toast.LENGTH_SHORT).show()
             } catch(e: Exception) {
-                Toast.makeText(this,"$e", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this,"$e", Toast.LENGTH_SHORT).show()
             }
             flashcardsetList = setNames
 
@@ -96,7 +95,6 @@ class MainActivity : AppCompatActivity() {
         // Load Horizontal Recycler View
         binding.rvSetsHorizontal.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3)
-        Toast.makeText(this, "shit", Toast.LENGTH_SHORT).show()
         
     }
 
@@ -139,13 +137,13 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 mDialogView.tilNewName.error = "Empty field"
-                Toast.makeText(this, "ERROR: EMPTY FIELD", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "ERROR: EMPTY FIELD", Toast.LENGTH_SHORT).show()
             }
         }
         // Cancel Button Clicked
         mDialogView.btnCancel.setOnClickListener {
             mAlertDialog.dismiss()
-            Toast.makeText(this, "Clicked CANCEL", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Clicked CANCEL", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -174,10 +172,12 @@ class RecyclerAdapterMain(
     private val displayLimit: Int
 ) : RecyclerView.Adapter<RecyclerAdapterMain.ViewHolder>() {
 
+    private var currentColor = 0
+
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvSet: TextView
         var tvNumOfCards: TextView
-        var cPlaySet: Chip
+        var cEditSet: Chip
         var cDeleteSet: Chip
         var cvSet: MaterialCardView
 
@@ -185,16 +185,23 @@ class RecyclerAdapterMain(
             tvSet = itemView.findViewById(R.id.tvSet)
             tvNumOfCards = itemView.findViewById(R.id.tvNumOfCards)
             cvSet = itemView.findViewById<MaterialCardView>(R.id.cardViewSet)
-            cPlaySet = itemView.findViewById(R.id.cPlaySet)
+            cEditSet = itemView.findViewById(R.id.cEditSet)
             cDeleteSet = itemView.findViewById(R.id.cDeleteSet)
 
-            // cvSet.setBackgroundResource(colorSets())
+            //
+
+            // background color changes
+            if(layout == R.layout.main_horizontal_set_layout) {
+                //cvSet.setCardBackgroundColor(ContextCompat.getColor(context, R.color.pastel1))
+                //cvSet.set
+                colorSet(cvSet)
+            }
 
             itemView.setOnClickListener {
                 // Go to third view
                 val tableName = setList[adapterPosition]
                 val numOfCards =  mumOfCardsList[adapterPosition]
-                Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
                 val intent = Intent(itemView.context, ThirdActivity::class.java)
                 intent.putExtra("tableName",tableName)
                 intent.putExtra("numOfCards",numOfCards)
@@ -207,11 +214,11 @@ class RecyclerAdapterMain(
                 mumOfCardsList.removeAt(adapterPosition)
                 notifyItemRemoved(adapterPosition)
                 val result = MainActivity.flashcardDBHelper.deleteSet(tableName.lowercase())
-                Toast.makeText(itemView.context, "You removed card: " + tableName + " result: $result", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(itemView.context, "You removed card: " + tableName + " result: $result", Toast.LENGTH_SHORT).show()
             }
-            cPlaySet.setOnClickListener {
+            cEditSet.setOnClickListener {
                 /*
-                // Go to second view
+                // EDIT NAME OF SET
                 val intent = Intent(itemView.context, SecondActivity::class.java)
                 itemView.context.startActivity(intent)
                  */
@@ -233,5 +240,18 @@ class RecyclerAdapterMain(
 
     override fun getItemCount(): Int {
         return if (setList.size > displayLimit) displayLimit else setList.size
+    }
+
+    fun colorSet(card: MaterialCardView){
+        val colorList = arrayListOf<Int>(R.color.pastel1, R.color.pastel2, R.color.pastel3, R.color.pastel4, R.color.pastel5)
+        var nxtColor = 0
+
+        if(currentColor == 4) {
+            currentColor == 0
+        } else {
+            currentColor += 1
+        }
+
+        card.setCardBackgroundColor(ContextCompat.getColor(context, colorList[currentColor]))
     }
 }
