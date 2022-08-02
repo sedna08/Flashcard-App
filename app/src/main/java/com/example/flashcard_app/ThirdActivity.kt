@@ -3,9 +3,6 @@ package com.example.flashcard_app
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.InsetDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +12,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.flashcard_app.databinding.ActivityMainBinding
 import com.example.flashcard_app.databinding.ActivityThirdBinding
 import com.example.flashcard_app.databinding.AlertDialogAddCardBinding
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
-import kotlin.random.Random
 
 class ThirdActivity : AppCompatActivity() {
 
@@ -34,10 +31,6 @@ class ThirdActivity : AppCompatActivity() {
         lateinit var numOfCards: String
         lateinit var tableName: String
         lateinit var binding: ActivityThirdBinding
-    }
-    override fun onRestart() {
-        super.onRestart()
-        viewContents(binding)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +60,6 @@ class ThirdActivity : AppCompatActivity() {
             val mDialogView = AlertDialogAddCardBinding.inflate(layoutInflater)
             val mBuilder = AlertDialog.Builder(this).setView(mDialogView.root)
             val mAlertDialog = mBuilder.show()
-            val back = ColorDrawable(Color.TRANSPARENT)
-            val inset = InsetDrawable(back, 20)
-            mAlertDialog.window?.setBackgroundDrawable(inset)
 
             mDialogView.btnSubmit.setOnClickListener {
                 Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
