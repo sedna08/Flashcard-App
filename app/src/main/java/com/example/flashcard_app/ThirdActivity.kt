@@ -3,6 +3,9 @@ package com.example.flashcard_app
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.InsetDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,11 +15,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.flashcard_app.databinding.ActivityMainBinding
 import com.example.flashcard_app.databinding.ActivityThirdBinding
 import com.example.flashcard_app.databinding.AlertDialogAddCardBinding
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import kotlin.random.Random
 
 class ThirdActivity : AppCompatActivity() {
 
@@ -31,6 +34,10 @@ class ThirdActivity : AppCompatActivity() {
         lateinit var numOfCards: String
         lateinit var tableName: String
         lateinit var binding: ActivityThirdBinding
+    }
+    override fun onRestart() {
+        super.onRestart()
+        viewContents(binding)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,14 +62,17 @@ class ThirdActivity : AppCompatActivity() {
         viewContents(binding)
 
         binding.btnSubmit.setOnClickListener {
-            // Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show()
 
             val mDialogView = AlertDialogAddCardBinding.inflate(layoutInflater)
             val mBuilder = AlertDialog.Builder(this).setView(mDialogView.root)
             val mAlertDialog = mBuilder.show()
+            val back = ColorDrawable(Color.TRANSPARENT)
+            val inset = InsetDrawable(back, 20)
+            mAlertDialog.window?.setBackgroundDrawable(inset)
 
             mDialogView.btnSubmit.setOnClickListener {
-                // Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Submit", Toast.LENGTH_SHORT).show()
                 // Code for submit button
                 var inputQ = mDialogView.editTextQuestion.text.toString()
                 var inputA = mDialogView.editTextAnswer.text.toString()
@@ -92,13 +102,13 @@ class ThirdActivity : AppCompatActivity() {
             }
         }
         binding.btnPlay.setOnClickListener {
-            // Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show()
 
             // Code for play button
             val items: Array<String> = resources.getStringArray(R.array.alert_list)
             var checkItem: Int = 0
             var selectedMode: String
-            var mode = 0
+            var mode = "1"
             AlertDialog.Builder(this)
                 .setTitle("Timed Mode?")
                 .setSingleChoiceItems(items, checkItem) { dialog, which ->
@@ -109,20 +119,20 @@ class ThirdActivity : AppCompatActivity() {
 
                     if (selectedMode == "Yes") {
                         Toast.makeText(this, "Timed Mode", Toast.LENGTH_SHORT).show()
-                        mode = 1
+                        mode = "1"
                     }
                     else if (selectedMode == "No") {
                         Toast.makeText(this, "Casual Mode", Toast.LENGTH_SHORT).show()
-                        mode = 0
+                        mode = "0"
                     }
 
                 }
                 .setPositiveButton("OK") { dialog, which ->
                     //action code for positive response
                     Toast.makeText(this, "Starting Flashcards", Toast.LENGTH_SHORT).show()
-
                     val intent = Intent(this, SecondActivity::class.java)
                     intent.putExtra("user_mode", mode)
+                    intent.putExtra("tableName",tableName)
                     startActivity(intent)
                 }
                 .setNegativeButton("CANCEL") { dialog, which ->
@@ -141,14 +151,13 @@ class ThirdActivity : AppCompatActivity() {
         var setNum: Int
         val flashcards = flashcardDBHelper.readAllQuestions(tableName)
 
-
         if(flashcards.isNotEmpty()) {
             try {
                 flashcards.forEach {
                     setQuestions.add(it.question)
                     setAnswers.add(it.answer)
                 }
-                // Toast.makeText(this,"Fetched Flashcards", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Fetched Flashcards", Toast.LENGTH_SHORT).show()
             } catch(e: Exception) {
                 Toast.makeText(this,"$e", Toast.LENGTH_SHORT).show()
             }
@@ -200,43 +209,98 @@ class RecyclerAdapter(
             cEdit = itemView.findViewById(R.id.cEdit)
             cDelete = itemView.findViewById(R.id.cDelete)
 
-            itemView.setOnClickListener {
-                //Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
-            }
-            cDelete.setOnClickListener {
-                val result = ThirdActivity.flashcardDBHelper.deleteQuestion(questions[adapterPosition],ThirdActivity.tableName.lowercase())
-                questions.removeAt(adapterPosition)
-                answers.removeAt(adapterPosition)
-                notifyItemRemoved(adapterPosition)
-                val numOfCards = ThirdActivity.flashcardDBHelper.getCount(ThirdActivity.tableName.lowercase())
-                ThirdActivity.binding.tvNumberOfCards.text = "Number of Cards : " + numOfCards.toString()
-                Toast.makeText(itemView.context, "Removed question, result: $result", Toast.LENGTH_SHORT).show()
-            }
-            cEdit.setOnClickListener {
-                val mDialogView = AlertDialogAddCardBinding.inflate(context.layoutInflater)
-                val mBuilder = AlertDialog.Builder(context).setView(mDialogView.root)
-                val mAlertDialog = mBuilder.show()
+            ProcessClickCard(itemView)
+            ProcessDeleteCard(itemView)
+            ProcessEditCard(itemView)
+        }
+    }
 
-                // Set edit text field values
-                mDialogView.editTextAnswer.setText(answers[adapterPosition])
-                mDialogView.editTextQuestion.setText(questions[adapterPosition])
+    private fun ViewHolder.ProcessClickCard(itemView: View) {
+        itemView.setOnClickListener {
+            Toast.makeText(itemView.context, "$adapterPosition", Toast.LENGTH_SHORT).show()
 
-                // Click listeners
-                mDialogView.btnSubmit.setOnClickListener {
-                    // Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
+        }
+    }
 
-                    // Code for submit button
-                    questions.set(adapterPosition, "String")
-                    notifyDataSetChanged()
+    private fun ViewHolder.ProcessDeleteCard(itemView: View) {
+        cDelete.setOnClickListener {
+            val result = ThirdActivity.flashcardDBHelper.deleteQuestion(
+                questions[adapterPosition],
+                ThirdActivity.tableName.lowercase()
+            )
+            questions.removeAt(adapterPosition)
+            answers.removeAt(adapterPosition)
+            notifyItemRemoved(adapterPosition)
+            val numOfCards =
+                ThirdActivity.flashcardDBHelper.getCount(ThirdActivity.tableName.lowercase())
+            ThirdActivity.binding.tvNumberOfCards.text =
+                "Number of Cards : " + numOfCards.toString()
+            Toast.makeText(
+                itemView.context,
+                "Removed question, result: $result",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun ViewHolder.ProcessEditCard(itemView: View) {
+        cEdit.setOnClickListener {
+            val mDialogView = AlertDialogAddCardBinding.inflate(context.layoutInflater)
+            val mBuilder = AlertDialog.Builder(context).setView(mDialogView.root)
+            val mAlertDialog = mBuilder.show()
+            val back = ColorDrawable(Color.TRANSPARENT)
+            val inset = InsetDrawable(back, 20)
+            mAlertDialog.window?.setBackgroundDrawable(inset)
+
+            // Set edit text field values
+            mDialogView.tvCardTitle.setText("Edit this card")
+            mDialogView.editTextAnswer.setText(answers[adapterPosition])
+            mDialogView.editTextQuestion.setText(questions[adapterPosition])
+
+            // Click listeners
+            mDialogView.btnSubmit.setOnClickListener {
+                Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
+                var inputQ = mDialogView.editTextQuestion.text.toString()
+                var inputA = mDialogView.editTextAnswer.text.toString()
+                if(inputQ.trim().isNotEmpty() && inputQ.trim().isNotBlank() && inputA.trim().isNotEmpty() &&  inputA.trim().isNotBlank()) {
+                    inputQ = normalizeInput(inputQ)
+                    val exists = ThirdActivity.flashcardDBHelper.readQuestion(inputQ,ThirdActivity.tableName)
+                    if(exists != 0) {
+                        Toast.makeText(itemView.context, "Question already exists", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(exists == 0) {
+                        val result = ThirdActivity.flashcardDBHelper.updateQuestion(inputQ,inputA,questions[adapterPosition],ThirdActivity.tableName)
+                        if(result) {
+                            Toast.makeText(itemView.context, "Successfully Updated Flashcard", Toast.LENGTH_SHORT).show()
+                            questions.set(adapterPosition, inputQ)
+                            answers.set(adapterPosition, inputA)
+                            mAlertDialog.dismiss()
+                        }
+                        else{
+                            Toast.makeText(itemView.context, "Failed to Update Flashcard", Toast.LENGTH_SHORT).show()
+                            mAlertDialog.dismiss()
+                        }
+                    }
+
                 }
-                mDialogView.btnCancel.setOnClickListener {
-                    mAlertDialog.dismiss()
-                    // Toast.makeText(itemView.context, "Cancel", Toast.LENGTH_SHORT).show()
-
-                    // Code for cancel button
+                else {
+                    Toast.makeText(itemView.context, "ERROR: EMPTY FIELD", Toast.LENGTH_SHORT).show()
                 }
+
+                // Code for submit button
+                notifyDataSetChanged()
+            }
+            mDialogView.btnCancel.setOnClickListener {
+                mAlertDialog.dismiss()
+                Toast.makeText(itemView.context, "Cancel", Toast.LENGTH_SHORT).show()
+
+                // Code for cancel button
             }
         }
+    }
+
+    private fun normalizeInput(input: String): String {
+        return input.trim().lowercase().replace("\\s".toRegex(),"_").replaceFirstChar {it.uppercase()}
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
