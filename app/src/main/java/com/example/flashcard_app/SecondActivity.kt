@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flashcard_app.databinding.ActivitySecondBinding
-//import com.example.flashcard_app.databinding.ActivityThirdBinding
+import com.example.flashcard_app.databinding.ActivityThirdBinding
 
 class SecondActivity : AppCompatActivity() {
 
@@ -22,6 +21,7 @@ class SecondActivity : AppCompatActivity() {
         lateinit var binding: ActivitySecondBinding
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySecondBinding.inflate(layoutInflater)
@@ -31,8 +31,6 @@ class SecondActivity : AppCompatActivity() {
         flashcardDBHelper = FlashcardDBHelper(this)
 
         var score = 0
-        var currentCard = 0
-        var scoreStatus = 1
         val bundle: Bundle? = intent.extras
         val playMode = bundle!!.getString("user_mode")
         val name =  bundle!!.getString("tableName")
@@ -40,8 +38,9 @@ class SecondActivity : AppCompatActivity() {
 
         getContents(binding)
 
+
         // code to display 1st question here
-        binding.tvCardInstruction.text = questionList.get(currentCard)
+        binding.tvCardInstruction.text = questionList.get(0)
 
         // to access answer "nth" answer
         // answerList.get(n).toString()
@@ -51,25 +50,20 @@ class SecondActivity : AppCompatActivity() {
 
         /*  note for timer:
             unit = milliseconds
-            12000 = time left
+            5000 = time left
             1000 = interval of tick
         */
 
         if (playMode == "1") {
-            timer = object : CountDownTimer(12000,1000){
+            timer = object : CountDownTimer(5000,1000){
                 override fun onTick(p0: Long) {
                     // displays no. of seconds left every 1 second
                     ("Time left: " + p0/1000).also { binding.textView3.text = it }
                 }
 
                 override fun onFinish() {
-                    // code to display answer
-                    binding.tvAnswer.text = answerList.get(currentCard)
-                    binding.tvAnswer.alpha = 1F
-                    if (currentCard != numOfCards.toInt()) {
-                        currentCard += 1
-                    }
-
+                    // code to display next question
+                    binding.textView2.text = answerList.get(0) // remove this
                     // Just play Sound here after time is done
                 }
 
@@ -79,7 +73,8 @@ class SecondActivity : AppCompatActivity() {
 
         binding.radioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             if (binding.radioBtnCheck.isChecked) {
-                scoreStatus = 1
+                score = score + 1
+                ("Score: " + score).also { binding.textView4.text = it }
                 Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
             }
             else if (binding.radioBtnWrong.isChecked) {
@@ -89,8 +84,7 @@ class SecondActivity : AppCompatActivity() {
         }
 
         binding.btnShow.setOnClickListener {
-            binding.tvAnswer.text = answerList.get(currentCard)
-            binding.tvAnswer.alpha = 1F
+            // code to display answer
         }
 
         binding.btnNext.setOnClickListener {
@@ -99,31 +93,13 @@ class SecondActivity : AppCompatActivity() {
             }
             else {
 
-                if (currentCard != numOfCards.toInt()) {
-                    currentCard += 1
-                }
-                else {
-                    AlertDialog.Builder(this)
-                        .setTitle("End of Flashcards")
-                        .setMessage("Return to Menu")
-                        .setPositiveButton("OK") {dialog, which ->
-                            val intent = Intent(this, ThirdActivity::class.java)
-                            startActivity(intent)
-                        }
-                }
-
-                if (scoreStatus == 1) {
-                    score += 1
-                    ("Score: " + score).also { binding.textView4.text = it }
-                }
-                binding.tvAnswer.alpha = 0F
-                binding.tvCardInstruction.text = questionList.get(currentCard)
-
+                // code to display next question
                 if (playMode == "1") {
                     onStop()
                     onStart()
                 }
             }
+            TODO("Condition to Check for Max Questions")
         }
 
         binding.btnExit.setOnClickListener {
