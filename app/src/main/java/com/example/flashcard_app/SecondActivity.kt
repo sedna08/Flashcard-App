@@ -46,7 +46,7 @@ class SecondActivity : AppCompatActivity() {
         tableName = name.toString()
 
         getContents(binding)
-
+            // aaaaa
         // code to display 1st question here
         binding.tvCardInstruction.text = questionList.get(currentCard)
 
