@@ -46,7 +46,7 @@ class SecondActivity : AppCompatActivity() {
         tableName = name.toString()
 
         getContents(binding)
-            // aaaaa
+
         // code to display 1st question here
         binding.tvCardInstruction.text = questionList.get(currentCard)
 
@@ -69,9 +69,6 @@ class SecondActivity : AppCompatActivity() {
                     // code to display answer
                     binding.tvAnswer.text = answerList.get(currentCard)
                     binding.tvAnswer.alpha = 1F
-                    if (currentCard != numOfCards.toInt()) {
-                        currentCard += 1
-                    }
                     playmusicTime?.start()
                 }
             }
@@ -98,18 +95,20 @@ class SecondActivity : AppCompatActivity() {
                 Toast.makeText(this, "ERROR! Must check if correct or wrong", Toast.LENGTH_SHORT).show()
             }
             else {
-                if (currentCard == numOfCards.toInt()) {
+                currentCard += 1
+                if (currentCard >= numOfCards.toInt()) {
+                    currentCard = (numOfCards.toInt() - 1)
                     AlertDialog.Builder(this)
                         .setTitle("End of Flashcards")
                         .setMessage("Return to Menu")
                         .setPositiveButton("OK") { dialog, which ->
                             val intent = Intent(this, ThirdActivity::class.java)
+                            intent.putExtra("tableName",tableName)
+                            intent.putExtra("numOfCards",numOfCards)
                             startActivity(intent)
-                        }
+                        }.show()
                 }
-                else if (currentCard != numOfCards.toInt()) {
-                    currentCard += 1
-
+                else {
                     if (scoreStatus == 1) {
                         score += 1
                         ("Score: " + score).also { binding.textView4.text = it }
@@ -122,6 +121,7 @@ class SecondActivity : AppCompatActivity() {
                         val playmusic = MediaPlayer.create(this, music)
                         playmusic?.start()
                     }
+
                     binding.tvAnswer.alpha = 0F
                     binding.tvCardInstruction.text = questionList.get(currentCard)
 
@@ -129,6 +129,8 @@ class SecondActivity : AppCompatActivity() {
                         onStop()
                         onStart()
                     }
+                    binding.radioBtnCheck.isChecked = false
+                    binding.radioBtnWrong.isChecked = false
                 }
             }
         }
@@ -143,7 +145,6 @@ class SecondActivity : AppCompatActivity() {
             intent.putExtra("numOfCards",numOfCards)
             startActivity(intent)
         }
-
     }
 
     private fun getContents(binding: ActivitySecondBinding) {
