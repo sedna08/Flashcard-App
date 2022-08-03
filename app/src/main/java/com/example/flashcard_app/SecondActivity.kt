@@ -1,5 +1,6 @@
 package com.example.flashcard_app
 
+import android.media.MediaPlayer
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -30,9 +31,15 @@ class SecondActivity : AppCompatActivity() {
         // Initializing database variable
         flashcardDBHelper = FlashcardDBHelper(this)
 
+        // initialize timer
+        timer = object : CountDownTimer(0,0){
+            override fun onTick(p0: Long) { }
+            override fun onFinish() { }
+        }
+
         var score = 0
         var currentCard = 0
-        var scoreStatus = 1
+        var scoreStatus = 0
         val bundle: Bundle? = intent.extras
         val playMode = bundle!!.getString("user_mode")
         val name =  bundle!!.getString("tableName")
@@ -43,19 +50,15 @@ class SecondActivity : AppCompatActivity() {
         // code to display 1st question here
         binding.tvCardInstruction.text = questionList.get(currentCard)
 
-        // to access answer "nth" answer
-        // answerList.get(n).toString()
-
-        // to access max questions
-        // use numOfCards variable
-
         /*  note for timer:
             unit = milliseconds
-            12000 = time left
-            1000 = interval of tick
+            (no. of ms, interval)
         */
+        val musicTime = R.raw.time
+        val playmusicTime = MediaPlayer.create(this, musicTime)
 
         if (playMode == "1") {
+            binding.textView3.alpha = 1F
             timer = object : CountDownTimer(12000,1000){
                 override fun onTick(p0: Long) {
                     // displays no. of seconds left every 1 second
@@ -69,13 +72,10 @@ class SecondActivity : AppCompatActivity() {
                     if (currentCard != numOfCards.toInt()) {
                         currentCard += 1
                     }
-
-                    // Just play Sound here after time is done
+                    playmusicTime?.start()
                 }
-
             }
         }
-
 
         binding.radioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             if (binding.radioBtnCheck.isChecked) {
@@ -83,9 +83,9 @@ class SecondActivity : AppCompatActivity() {
                 Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
             }
             else if (binding.radioBtnWrong.isChecked) {
+                scoreStatus = 0
                 Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show()
             }
-
         }
 
         binding.btnShow.setOnClickListener {
@@ -98,30 +98,37 @@ class SecondActivity : AppCompatActivity() {
                 Toast.makeText(this, "ERROR! Must check if correct or wrong", Toast.LENGTH_SHORT).show()
             }
             else {
-
-                if (currentCard != numOfCards.toInt()) {
-                    currentCard += 1
-                }
-                else {
+                if (currentCard == numOfCards.toInt()) {
                     AlertDialog.Builder(this)
                         .setTitle("End of Flashcards")
                         .setMessage("Return to Menu")
-                        .setPositiveButton("OK") {dialog, which ->
+                        .setPositiveButton("OK") { dialog, which ->
                             val intent = Intent(this, ThirdActivity::class.java)
                             startActivity(intent)
                         }
                 }
+                else if (currentCard != numOfCards.toInt()) {
+                    currentCard += 1
 
-                if (scoreStatus == 1) {
-                    score += 1
-                    ("Score: " + score).also { binding.textView4.text = it }
-                }
-                binding.tvAnswer.alpha = 0F
-                binding.tvCardInstruction.text = questionList.get(currentCard)
+                    if (scoreStatus == 1) {
+                        score += 1
+                        ("Score: " + score).also { binding.textView4.text = it }
+                        val music = R.raw.right
+                        val playmusic = MediaPlayer.create(this, music)
+                        playmusic?.start()
+                    }
+                    else {
+                        val music = R.raw.wrong
+                        val playmusic = MediaPlayer.create(this, music)
+                        playmusic?.start()
+                    }
+                    binding.tvAnswer.alpha = 0F
+                    binding.tvCardInstruction.text = questionList.get(currentCard)
 
-                if (playMode == "1") {
-                    onStop()
-                    onStart()
+                    if (playMode == "1") {
+                        onStop()
+                        onStart()
+                    }
                 }
             }
         }
@@ -137,7 +144,6 @@ class SecondActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
     }
 
     private fun getContents(binding: ActivitySecondBinding) {
@@ -152,7 +158,7 @@ class SecondActivity : AppCompatActivity() {
                     setQuestions.add(it.question)
                     setAnswers.add(it.answer)
                 }
-                Toast.makeText(this,"Fetched Flashcards", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this,"Fetched Flashcards", Toast.LENGTH_SHORT).show()
             } catch(e: Exception) {
                 Toast.makeText(this,"$e", Toast.LENGTH_SHORT).show()
             }
@@ -168,7 +174,6 @@ class SecondActivity : AppCompatActivity() {
             setNum = 0
             Toast.makeText(this,"Empty Flashcard Set", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     override fun onStart() {
@@ -180,7 +185,5 @@ class SecondActivity : AppCompatActivity() {
         super.onStop()
         timer.cancel()
     }
-
-
 
 }
