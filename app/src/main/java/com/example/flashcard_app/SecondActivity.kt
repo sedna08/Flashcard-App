@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flashcard_app.databinding.ActivitySecondBinding
-//import com.example.flashcard_app.databinding.ActivityThirdBinding
 
 class SecondActivity : AppCompatActivity() {
 
@@ -69,9 +68,6 @@ class SecondActivity : AppCompatActivity() {
                     // code to display answer
                     binding.tvAnswer.text = answerList.get(currentCard)
                     binding.tvAnswer.alpha = 1F
-                    if (currentCard != numOfCards.toInt()) {
-                        currentCard += 1
-                    }
                     playmusicTime?.start()
                 }
             }
@@ -98,18 +94,21 @@ class SecondActivity : AppCompatActivity() {
                 Toast.makeText(this, "ERROR! Must check if correct or wrong", Toast.LENGTH_SHORT).show()
             }
             else {
-                if (currentCard == numOfCards.toInt()) {
+                currentCard += 1
+                if (currentCard >= numOfCards.toInt()) {
+                    currentCard = (numOfCards.toInt() - 1)
                     AlertDialog.Builder(this)
                         .setTitle("End of Flashcards")
                         .setMessage("Return to Menu")
                         .setPositiveButton("OK") { dialog, which ->
                             val intent = Intent(this, ThirdActivity::class.java)
+                            intent.putExtra("tableName",tableName)
+                            intent.putExtra("numOfCards",numOfCards)
                             startActivity(intent)
                         }
+                        .show()
                 }
                 else if (currentCard != numOfCards.toInt()) {
-                    currentCard += 1
-
                     if (scoreStatus == 1) {
                         score += 1
                         ("Score: " + score).also { binding.textView4.text = it }
@@ -129,6 +128,8 @@ class SecondActivity : AppCompatActivity() {
                         onStop()
                         onStart()
                     }
+                    binding.radioBtnCheck.isChecked = false
+                    binding.radioBtnWrong.isChecked = false
                 }
             }
         }

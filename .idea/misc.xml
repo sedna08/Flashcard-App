@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/activity_second.xml" value="0.2" />
-        <entry key="..\:/3rd yr/Summer/CpE 3323 Mobile App Development/Flashcard-App/app/src/main/res/layout/activity_third.xml" value="0.11302083333333333" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/activity_second.xml" value="0.1" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/alert_dialog_add_card.xml" value="0.33016304347826086" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/alert_dialog_add_set.xml" value="0.19270833333333334" />
+        <entry key="..\:/Desktop/3rd year Summer Term/Moible Applications Development/Final Project/Flashcard-App/app/src/main/res/layout/main_horizontal_set_layout.xml" value="0.19270833333333334" />
         <entry key="..\:/Tej only/3rd Year/CPE 3323/FinalsProject/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.148" />
         <entry key="..\:/Tej only/3rd Year/CPE 3323/FinalsProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.148" />
         <entry key="..\:/Tej only/3rd Year/CPE 3323/FinalsProject/app/src/main/res/drawable/layout_curvetop.xml" value="0.148" />
