@@ -116,10 +116,14 @@ class FlashcardDBHelper(context: Context) : SQLiteOpenHelper(context,DATABASE_NA
 
     fun updateSet(newName: String, oldName: String): Boolean {
         val db = writableDatabase
+        try {
+            db.execSQL("ALTER TABLE " + oldName + " RENAME TO " + newName + "")
+        } catch (e: SQLiteException) {
+            return false
+        }
         val values = ContentValues()
         values.put(FlashcardAppDBSchema.FlashcardSetEntity.COLUMN_NAME, newName)
         val success = db.update(FlashcardAppDBSchema.FlashcardSetEntity.TABLE_NAME, values, "" + FlashcardAppDBSchema.FlashcardSetEntity.COLUMN_NAME +  "=?", arrayOf(oldName))
-        db.execSQL("ALTER TABLE " + oldName + " RENAME TO " + newName + "")
         db.close()
         return (Integer.parseInt("$success")!= 0)
     }

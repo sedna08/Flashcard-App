@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -74,11 +75,12 @@ class SecondActivity : AppCompatActivity() {
         }
 
         binding.radioGroup.setOnCheckedChangeListener { radioGroup, _ ->
-            if (binding.radioBtnCheck.isChecked) {
+            val selectedRadioText = radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).text.toString()
+            if(selectedRadioText == "Correct") {
                 scoreStatus = 1
                 Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
             }
-            else if (binding.radioBtnWrong.isChecked) {
+            else if (selectedRadioText == "Wrong") {
                 scoreStatus = 0
                 Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show()
             }
@@ -128,8 +130,14 @@ class SecondActivity : AppCompatActivity() {
                         onStop()
                         onStart()
                     }
-                    binding.radioBtnCheck.isChecked = false
-                    binding.radioBtnWrong.isChecked = false
+                    if(binding.radioBtnCheck.isChecked == true) {
+                        binding.radioBtnCheck.isChecked = false
+                    }
+                    else if(binding.radioBtnWrong.isChecked == true) {
+                        binding.radioBtnWrong.isChecked = false
+                    }
+
+
                 }
             }
         }

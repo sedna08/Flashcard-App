@@ -27,10 +27,8 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
-    // Declaration of variable for database handler/helper
     companion object {
+        lateinit var binding: ActivityMainBinding
         lateinit var flashcardDBHelper : FlashcardDBHelper
         var flashcardsetList = ArrayList<String>()
         var cardCountList = ArrayList<String>()
@@ -223,6 +221,9 @@ class RecyclerAdapterMain(
             val inset = InsetDrawable(back, 20)
             mAlertDialog.window?.setBackgroundDrawable(inset)
 
+
+            val tableName = setList[adapterPosition]
+
             // Set edit text field values
             mDialogView.tvSetTitle.setText("Edit this card")
             // mDialogView.tvSetInstruction.setText("Something")
@@ -230,10 +231,47 @@ class RecyclerAdapterMain(
 
             // Add Button in Alert Dialog is clicked
             mDialogView.btnSubmit.setOnClickListener {
-                Toast.makeText(itemView.context, "Submit", Toast.LENGTH_SHORT).show()
+                var input = mDialogView.etNewName.text.toString()
+                if(input.trim().isNotEmpty() && input.trim().isNotBlank()) {
+                    if (checkInput(input)) {
+                        input = normalizeInput(input)
+                        val exists = MainActivity.flashcardDBHelper.readSet(input)
+                        if(exists != 0) {
+                            mDialogView.tilNewName.setError("Set Name Taken")
+                        }
+                        else if (exists == 0) {
+                            val result = MainActivity.flashcardDBHelper.updateSet(input,tableName)
+                            if(result) {
+                                Toast.makeText(itemView.context, "Successfully Updated", Toast.LENGTH_SHORT).show()
+                                setList.set(adapterPosition, input)
+                            }
+                            else{
+                                Toast.makeText(itemView.context, "Failed to Update", Toast.LENGTH_SHORT).show()
+                            }
+                            mAlertDialog.dismiss()
+                            notifyDataSetChanged()
+                            MainActivity.binding.rvSetsHorizontal.layoutManager =
+                                StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                            MainActivity.binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(
+                                context,
+                                MainActivity.flashcardsetList,
+                                MainActivity.cardCountList,
+                                R.layout.main_horizontal_set_layout,
+                                3
+                            )
+                        }
+                    }
+                    else {
+                        mDialogView.tilNewName.error = "Set Name not Acceptable"
+                    }
+                }
+                else {
+                    mDialogView.tilNewName.error = "Empty field"
+                }
             }
             // Cancel Button Clicked
             mDialogView.btnCancel.setOnClickListener {
+                Toast.makeText(itemView.context, "Cancel", Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
             }
         }
@@ -246,7 +284,7 @@ class RecyclerAdapterMain(
             setList.removeAt(adapterPosition)
             mumOfCardsList.removeAt(adapterPosition)
             notifyItemRemoved(adapterPosition)
-            val result = MainActivity.flashcardDBHelper.deleteSet(tableName.lowercase())
+            val result = MainActivity.flashcardDBHelper.deleteSet(tableName)
             // Toast.makeText(itemView.context, "You removed card: " + tableName + " result: $result", Toast.LENGTH_SHORT).show()
         }
     }
@@ -284,5 +322,20 @@ class RecyclerAdapterMain(
         val colorList = arrayListOf<Int>(R.color.pastel1, R.color.pastel2, R.color.pastel3, R.color.pastel4, R.color.pastel5)
         if(currentColor == 4) currentColor = 0 else currentColor += 1
         card.setCardBackgroundColor(ContextCompat.getColor(context, colorList[currentColor]))
+    }
+
+    private fun normalizeInput(input: String): String {
+        return input.trim().lowercase().replace("\\s".toRegex(),"_").replaceFirstChar {it.uppercase()}
+    }
+    private fun checkInput(input: String): Boolean {
+        var result = false
+        val checkThis = input.trim().take(7).lowercase()
+        if(checkThis == "sqlite_" || checkThis == "sqlite ")
+            result = false
+        else{
+            val firstChar = input.trim().get(0)
+            result = firstChar.isLetter()
+        }
+        return result
     }
 }
