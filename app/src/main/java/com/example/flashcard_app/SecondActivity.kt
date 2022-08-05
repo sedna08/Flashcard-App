@@ -1,18 +1,31 @@
 package com.example.flashcard_app
 
-import android.media.MediaPlayer
+import android.R.attr.x
+import android.R.attr.y
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.*
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.widget.RadioButton
+import android.os.SystemClock
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.animation.AlphaAnimation
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.flashcard_app.databinding.ActivitySecondBinding
+import com.example.flashcard_app.databinding.AlertCompleteSetBinding
+import kotlin.math.hypot
+
 
 class SecondActivity : AppCompatActivity() {
 
     private lateinit var timer : CountDownTimer
+    private var currentColor = 1
 
     companion object {
         lateinit var flashcardDBHelper : FlashcardDBHelper
@@ -24,6 +37,7 @@ class SecondActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        getSupportActionBar()?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,18 +51,24 @@ class SecondActivity : AppCompatActivity() {
             override fun onFinish() { }
         }
 
+        var setCardView = 0
         var score = 0
         var currentCard = 0
         var scoreStatus = 0
+        var setSound = 0
+
         val bundle: Bundle? = intent.extras
         val playMode = bundle!!.getString("user_mode")
         val name =  bundle!!.getString("tableName")
-        tableName = name.toString()
+        val buttonClick = AlphaAnimation(1f, 0.5f)
 
+        tableName = name.toString()
         getContents(binding)
-            // aaaaa
-        // code to display 1st question here
+
+        // code to display all Information for 1st set
         binding.tvCardInstruction.text = questionList.get(currentCard)
+        binding.tvAnswer.text = answerList.get(currentCard)
+        binding.tvPoints.text = "0/" + numOfCards.toInt()
 
         /*  note for timer:
             unit = milliseconds
@@ -58,38 +78,152 @@ class SecondActivity : AppCompatActivity() {
         val playmusicTime = MediaPlayer.create(this, musicTime)
 
         if (playMode == "1") {
-            binding.textView3.alpha = 1F
+            binding.tvTimer.alpha = 1F
             timer = object : CountDownTimer(12000,1000){
                 override fun onTick(p0: Long) {
                     // displays no. of seconds left every 1 second
-                    ("Time left: " + p0/1000).also { binding.textView3.text = it }
+                    ("" + p0/1000 + "s").also { binding.tvTimer.text = it }
                 }
 
                 override fun onFinish() {
-                    // code to display answer
-                    binding.tvAnswer.text = answerList.get(currentCard)
-                    binding.tvAnswer.alpha = 1F
-                    playmusicTime?.start()
+                    // prgram touch to activate flcard on touch listener
+                    if (setSound == 0) {
+                        val motionEvent = MotionEvent.obtain(
+                            SystemClock.uptimeMillis(),
+                            SystemClock.uptimeMillis() + 100,
+                            MotionEvent.ACTION_BUTTON_PRESS,
+                            0.0f,
+                            0.0f,
+                            0
+                        )
+                        binding.flCard.dispatchTouchEvent(motionEvent)
+                        playmusicTime?.start()
+                    }
                 }
             }
         }
 
-        binding.radioGroup.setOnCheckedChangeListener { radioGroup, _ ->
-            val selectedRadioText = radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).text.toString()
-            if(selectedRadioText == "Correct") {
+        // correct button listener          : 0->no choice, 1->correct, 3->wrong
+        binding.imgvCorrect.setOnClickListener {
+            if (scoreStatus == 0 || scoreStatus == 2) {
+                setButtonColor(binding.imgvCorrect, "#66DE93")
+                setButtonColor(binding.imgvWrong, "#F5F4F4")
                 scoreStatus = 1
-                Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
-            }
-            else if (selectedRadioText == "Wrong") {
-                scoreStatus = 0
-                Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show()
             }
         }
 
-        binding.btnShow.setOnClickListener {
-            binding.tvAnswer.text = answerList.get(currentCard)
-            binding.tvAnswer.alpha = 1F
+        // wrong button listener
+        binding.imgvWrong.setOnClickListener {
+            if (scoreStatus == 0 || scoreStatus == 1) {
+                setButtonColor(binding.imgvCorrect, "#F5F4F4")
+                setButtonColor(binding.imgvWrong, "#FF616D")
+                scoreStatus = 2
+            }
         }
+
+        // animation on press
+        binding.flCard.setOnTouchListener { v, event ->
+            if(setCardView==0) {
+                binding.cvAnswer.isVisible = true
+                //binding.cvQuestion.isVisible = false
+                binding.cvQuestion.isClickable = false
+                setCardView = 1
+                ViewAnimationUtils.createCircularReveal(
+                    binding.tvAnswer,
+                    event.x.toInt(),
+                    event.y.toInt(),
+                    0f,
+                    hypot(v.width.toFloat(), v.height.toFloat())
+                )
+                    .setDuration(1000)
+                    .start()
+            }
+            else if(setCardView==1) {
+                binding.cvQuestion.isVisible = true
+                binding.cvAnswer.isVisible = false
+                binding.cvAnswer.isClickable = false
+                setCardView = 0
+            }
+            false
+
+        }
+
+        // next button listener
+        binding.btnNext.setOnClickListener{
+            binding.btnNext.startAnimation(buttonClick)
+            if(scoreStatus==0) {
+                Toast.makeText(this, "ERROR! Must check if correct or wrong",
+                    Toast.LENGTH_SHORT).show()
+            } else {
+                currentCard += 1
+                if (currentCard >= numOfCards.toInt()) {
+                    currentCard = (numOfCards.toInt() - 1)
+                    setSound = 1
+                    if (scoreStatus == 1) score += 1
+
+                    //play music
+                    val playmusic = MediaPlayer.create(this, R.raw.win)
+                    playmusic?.start()
+
+                    val mDialogView = AlertCompleteSetBinding.inflate(layoutInflater)
+                    mDialogView.tvScore.text = "$score/" + numOfCards.toInt()
+                    mDialogView.tvDescription.text = "This is your score for the $tableName Flash Card Set."
+
+                    val mBuilder = android.app.AlertDialog.Builder(this)
+                        .setView(mDialogView.root)
+
+                    val mAlertDialog = mBuilder.show()
+
+                    mDialogView.button.setOnClickListener {
+                        mAlertDialog.dismiss()
+                        val intent = Intent(this, ThirdActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                }
+                else if (currentCard != numOfCards.toInt()) {
+                    if (scoreStatus == 1) {
+                        score += 1
+                        ("$score/" + numOfCards.toInt()).also { binding.tvPoints.text = it }
+                        val music = R.raw.right
+                        val playmusic = MediaPlayer.create(this, music)
+                        playmusic?.start()
+                    }
+                    else if (scoreStatus == 2){
+                        val music = R.raw.wrong
+                        val playmusic = MediaPlayer.create(this, music)
+                        playmusic?.start()
+                    }
+
+                    //change color of flashcard
+                    colorSet(binding.tvCardInstruction)
+                    binding.cvQuestion.isVisible = true
+                    binding.cvAnswer.isVisible = false
+                    binding.cvAnswer.isClickable = false
+                    setCardView = 0
+
+                    // define new question and answer
+                    binding.tvCardInstruction.text = questionList.get(currentCard)
+                    binding.tvAnswer.text = answerList.get(currentCard)
+
+                    // reset button colors
+                    setButtonColor(binding.imgvCorrect, "#F5F4F4")
+                    setButtonColor(binding.imgvWrong, "#F5F4F4")
+                    scoreStatus = 0
+
+
+                    if (playMode == "1") {
+                        onStop()
+                        onStart()
+                    }
+
+                }
+
+            }
+        }
+
+
+        /*
 
         binding.btnNext.setOnClickListener {
             if (binding.radioBtnCheck.isChecked == false && binding.radioBtnWrong.isChecked == false) {
@@ -142,6 +276,8 @@ class SecondActivity : AppCompatActivity() {
             }
         }
 
+        */
+
         binding.btnExit.setOnClickListener {
             score = 0
             if (playMode == "1") {
@@ -152,6 +288,22 @@ class SecondActivity : AppCompatActivity() {
             intent.putExtra("numOfCards",numOfCards)
             startActivity(intent)
         }
+
+
+
+    }
+
+    private fun setButtonColor(view: View, color: String) {
+        val gradientDrawable = (view.getBackground() as GradientDrawable).mutate()
+        (gradientDrawable as GradientDrawable).setColor(Color.parseColor(color))
+
+    }
+
+    fun colorSet(txt: TextView){
+        val colorList = arrayListOf<Int>(R.color.pastel1,R.color.pastel2,R.color.pastel3,R.color.pastel4, R.color.pastel5)
+        if(currentColor == 4) currentColor = 0
+        else currentColor += 1
+        txt.setBackgroundResource(colorList.get(currentColor))
 
     }
 

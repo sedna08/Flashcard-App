@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#346B31"
+    tools:context=".SecondActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:fontFamily="casual"
+        android:text="Score: "
+        android:textAlignment="viewEnd"
+        android:textColor="#E6E6E6"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:alpha="0"
+        android:fontFamily="casual"
+        android:text="Time"
+        android:textAlignment="viewEnd"
+        android:textColor="#E6E6E6"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/tvCardInstruction2"
+        android:layout_width="358dp"
+        android:layout_height="82dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="280dp"
+        android:fontFamily="casual"
+        android:text="question lorem ipsum"
+        android:textAlignment="viewStart"
+        android:textColor="#E6E6E6"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.698"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#000000"
+        android:fontFamily="casual"
+        android:text="Show answer"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCardInstruction" />
+
+    <TextView
+        android:id="@+id/tvAnswer2"
+        android:layout_width="344dp"
+        android:layout_height="59dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="168dp"
+        android:fontFamily="casual"
+        android:text="answer lorem ipsum"
+        android:textAlignment="viewStart"
+        android:textColor="#E6E6E6"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.761"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnShow" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="40dp"
+        android:checkedButton="@+id/radio_button_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAnswer">
+
+        <RadioButton
+            android:id="@+id/radioBtnCheck"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:fontFamily="monospace"
+            android:text="Correct"
+            tools:layout_editor_absoluteX="92dp"
+            tools:layout_editor_absoluteY="305dp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnExit2"
+        android:layout_width="186dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#ED7777"
+        android:fontFamily="casual"
+        android:text="Exit"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btnNext2"
+        android:layout_width="186dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="476dp"
+        android:backgroundTint="#F5F9AD"
+        android:fontFamily="casual"
+        android:text="Next Question"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <RadioButton
+        android:id="@+id/radioBtnWrong"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:fontFamily="monospace"
+        android:text="Wrong"
+        tools:layout_editor_absoluteX="164dp"
+        tools:layout_editor_absoluteY="150dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

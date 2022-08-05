@@ -4,151 +4,187 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#346B31"
-    tools:context=".SecondActivity">
+    android:layout_weight="2"
+    android:background="@color/b1"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="350dp"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
-        android:text="Time"
-        android:textAlignment="viewEnd"
-        android:textColor="#E6E6E6"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:alpha="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="casual"
-        android:text="Score: "
-        android:textAlignment="viewEnd"
-        android:textColor="#E6E6E6"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvCardInstruction"
-        android:layout_width="358dp"
-        android:layout_height="82dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:fontFamily="casual"
-        android:text="question lorem ipsum"
-        android:textAlignment="viewStart"
-        android:textColor="#E6E6E6"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <Button
-        android:id="@+id/btnShow"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#000000"
-        android:fontFamily="casual"
-        android:text="Show answer"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCardInstruction" />
-
-    <TextView
-        android:id="@+id/tvAnswer"
-        android:layout_width="344dp"
-        android:layout_height="59dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:fontFamily="casual"
-        android:text="answer lorem ipsum"
-        android:textAlignment="viewStart"
-        android:textColor="#E6E6E6"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnShow" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="40dp"
-        android:checkedButton="@+id/radio_button_1"
+        android:layout_margin="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAnswer">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/radioBtnCheck"
-            android:layout_width="120dp"
-            android:layout_height="35dp"
-            android:fontFamily="monospace"
-            android:text="Correct"
-            tools:layout_editor_absoluteX="92dp"
-            tools:layout_editor_absoluteY="305dp" />
+        <ImageButton
+            android:id="@+id/btnExit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back" />
 
-        <RadioButton
-            android:id="@+id/radioBtnWrong"
-            android:layout_width="120dp"
-            android:layout_height="35dp"
-            android:fontFamily="monospace"
-            android:text="Wrong"
-            tools:layout_editor_absoluteX="92dp"
-            tools:layout_editor_absoluteY="339dp" />
-    </RadioGroup>
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10s"
+            android:textColor="@color/white1"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="186dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#F5F9AD"
-        android:fontFamily="casual"
-        android:text="Next Question"
-        android:textColor="#000000"
-        android:textStyle="bold"
+        <TextView
+            android:id="@+id/tvPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1/10"
+            android:textColor="@color/white1"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvTimer"
+            app:layout_constraintStart_toStartOf="@+id/btnExit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/flCard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="40dp"
+        android:background="@drawable/layout_curveall"
+        android:backgroundTint="#00FFFFFF"
+        android:backgroundTintMode="add"
+        android:elevation="2dp"
+        android:hapticFeedbackEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-    <Button
-        android:id="@+id/btnExit"
-        android:layout_width="186dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#ED7777"
-        android:fontFamily="casual"
-        android:text="Exit"
-        android:textColor="#000000"
-        android:textStyle="bold"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="#00FFFFFF"
+            app:cardCornerRadius="40dp">
+
+            <TextView
+                android:id="@+id/tvCardInstruction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/pastel1"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:maxLines="100"
+                android:padding="20dp"
+                android:singleLine="false"
+                android:text="Question"
+                android:textColor="@color/b1"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:cardBackgroundColor="#00FFFFFF"
+            app:cardCornerRadius="40dp">
+
+            <TextView
+                android:id="@+id/tvAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white1"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:maxLines="100"
+                android:padding="20dp"
+                android:singleLine="false"
+                android:text="Answer"
+                android:textColor="@color/b1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/white1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNext" />
+        app:layout_constraintStart_toStartOf="parent">
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imgvWrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/layout_curveleft"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/wrong" />
+
+        <View
+            android:layout_width="1.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/b1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white1"
+            android:backgroundTintMode="add"
+            android:text="NEXT"
+            android:textColor="@color/b1"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="1.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/b1" />
+
+        <ImageView
+            android:id="@+id/imgvCorrect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/layout_curveright"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/correct" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
