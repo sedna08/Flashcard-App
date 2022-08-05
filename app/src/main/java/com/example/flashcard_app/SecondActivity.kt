@@ -56,6 +56,7 @@ class SecondActivity : AppCompatActivity() {
         var currentCard = 0
         var scoreStatus = 0
         var setSound = 0
+        var done = false
 
         val bundle: Bundle? = intent.extras
         val playMode = bundle!!.getString("user_mode")
@@ -154,11 +155,14 @@ class SecondActivity : AppCompatActivity() {
             if(scoreStatus==0) {
                 Toast.makeText(this, "ERROR! Must check if correct or wrong",
                     Toast.LENGTH_SHORT).show()
-            } else {
-                currentCard += 1
-                if (currentCard >= numOfCards.toInt()) {
-                    currentCard = (numOfCards.toInt() - 1)
+            }
+            else {
+                if (currentCard+1 == numOfCards.toInt()) {
                     setSound = 1
+                    if(done == false) {
+                        score += 1
+                        ("$score/" + numOfCards.toInt()).also { binding.tvPoints.text = it }
+                    }
 
                     //play music
                     val playmusic = MediaPlayer.create(this, R.raw.win)
@@ -173,6 +177,8 @@ class SecondActivity : AppCompatActivity() {
 
                     val mAlertDialog = mBuilder.show()
 
+                    done = true
+
                     mDialogView.button.setOnClickListener {
                         mAlertDialog.dismiss()
                         val intent = Intent(this, ThirdActivity::class.java)
@@ -182,7 +188,8 @@ class SecondActivity : AppCompatActivity() {
                     }
 
                 }
-                else if (currentCard != numOfCards.toInt()) {
+                else if (currentCard+1 != numOfCards.toInt()) {
+                    currentCard += 1
                     if (scoreStatus == 1) {
                         score += 1
                         ("$score/" + numOfCards.toInt()).also { binding.tvPoints.text = it }
