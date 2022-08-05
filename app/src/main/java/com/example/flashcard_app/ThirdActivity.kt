@@ -193,7 +193,7 @@ class ThirdActivity : AppCompatActivity() {
     }
 
     private fun normalizeInput(input: String): String {
-        return input.trim().lowercase().replace("\\s".toRegex(),"_").replaceFirstChar {it.uppercase()}
+        return input.trim().lowercase().replaceFirstChar {it.uppercase()}
     }
 }
 
@@ -315,7 +315,7 @@ class RecyclerAdapter(
     }
 
     private fun normalizeInput(input: String): String {
-        return input.trim().lowercase().replace("\\s".toRegex(),"_").replaceFirstChar {it.uppercase()}
+        return input.trim().lowercase().replaceFirstChar {it.uppercase()}
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
