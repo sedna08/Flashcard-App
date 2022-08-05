@@ -18,11 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.flashcard_app.databinding.ActivityMainBinding
-import com.example.flashcard_app.databinding.AlertDialogAddCardBinding
 import com.example.flashcard_app.databinding.AlertDialogAddSetBinding
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
-import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {

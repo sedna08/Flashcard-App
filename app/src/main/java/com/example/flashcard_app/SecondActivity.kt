@@ -1,7 +1,6 @@
 package com.example.flashcard_app
 
-import android.R.attr.x
-import android.R.attr.y
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.*
@@ -36,6 +35,7 @@ class SecondActivity : AppCompatActivity() {
         lateinit var binding: ActivitySecondBinding
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         getSupportActionBar()?.hide()
         super.onCreate(savedInstanceState)
@@ -159,7 +159,6 @@ class SecondActivity : AppCompatActivity() {
                 if (currentCard >= numOfCards.toInt()) {
                     currentCard = (numOfCards.toInt() - 1)
                     setSound = 1
-                    if (scoreStatus == 1) score += 1
 
                     //play music
                     val playmusic = MediaPlayer.create(this, R.raw.win)
@@ -177,6 +176,8 @@ class SecondActivity : AppCompatActivity() {
                     mDialogView.button.setOnClickListener {
                         mAlertDialog.dismiss()
                         val intent = Intent(this, ThirdActivity::class.java)
+                        intent.putExtra("tableName",tableName)
+                        intent.putExtra("numOfCards",numOfCards)
                         startActivity(intent)
                     }
 
@@ -222,61 +223,6 @@ class SecondActivity : AppCompatActivity() {
             }
         }
 
-
-        /*
-
-        binding.btnNext.setOnClickListener {
-            if (binding.radioBtnCheck.isChecked == false && binding.radioBtnWrong.isChecked == false) {
-                Toast.makeText(this, "ERROR! Must check if correct or wrong", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                currentCard += 1
-                if (currentCard >= numOfCards.toInt()) {
-                    currentCard = (numOfCards.toInt() - 1)
-                    AlertDialog.Builder(this)
-                        .setTitle("End of Flashcards")
-                        .setMessage("Return to Menu")
-                        .setPositiveButton("OK") { dialog, which ->
-                            val intent = Intent(this, ThirdActivity::class.java)
-                            intent.putExtra("tableName",tableName)
-                            intent.putExtra("numOfCards",numOfCards)
-                            startActivity(intent)
-                        }
-                        .show()
-                }
-                else if (currentCard != numOfCards.toInt()) {
-                    if (scoreStatus == 1) {
-                        score += 1
-                        ("Score: " + score).also { binding.textView4.text = it }
-                        val music = R.raw.right
-                        val playmusic = MediaPlayer.create(this, music)
-                        playmusic?.start()
-                    }
-                    else {
-                        val music = R.raw.wrong
-                        val playmusic = MediaPlayer.create(this, music)
-                        playmusic?.start()
-                    }
-                    binding.tvAnswer.alpha = 0F
-                    binding.tvCardInstruction.text = questionList.get(currentCard)
-
-                    if (playMode == "1") {
-                        onStop()
-                        onStart()
-                    }
-                    if(binding.radioBtnCheck.isChecked == true) {
-                        binding.radioBtnCheck.isChecked = false
-                    }
-                    else if(binding.radioBtnWrong.isChecked == true) {
-                        binding.radioBtnWrong.isChecked = false
-                    }
-
-
-                }
-            }
-        }
-
-        */
 
         binding.btnExit.setOnClickListener {
             score = 0
