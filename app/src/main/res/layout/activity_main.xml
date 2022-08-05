@@ -11,7 +11,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:scrollbarSize="0dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:orientation="vertical"
             android:weightSum="1">
@@ -83,40 +83,43 @@
 
             </LinearLayout>
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarSize="0dp"
-            android:scrollbars="none">
-
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:animateLayoutChanges="true"
-                android:paddingLeft="20dp"
-                android:paddingBottom="20dp">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scrollbarSize="0dp"
+                android:scrollbars="none"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:paddingLeft="20dp"
+                    android:paddingBottom="20dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvSetsHorizontal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:nestedScrollingEnabled="false"
+                        android:fitsSystemWindows="false"
+                        android:nestedScrollingEnabled="true"
                         android:visibility="visible">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
-            </LinearLayout>
-        </HorizontalScrollView>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="fill_vertical"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:animateLayoutChanges="true"
                 android:background="@drawable/layout_curvetop"
                 android:backgroundTint="@color/white1"
+                android:minHeight="700dp"
                 android:orientation="vertical"
                 android:padding="30dp">
 

@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     flashcardsetList,
                     cardCountList,
                     R.layout.main_horizontal_set_layout,
-                    3
+                    5
                 )
             }
         }
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvSetsVertical.visibility = View.VISIBLE
         // Load Horizontal Recycler View
         binding.rvSetsHorizontal.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-        binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 3)
+        binding.rvSetsHorizontal.adapter = RecyclerAdapterMain(this, flashcardsetList, cardCountList, R.layout.main_horizontal_set_layout, 5)
         
     }
 
@@ -257,7 +257,7 @@ class RecyclerAdapterMain(
                                 MainActivity.flashcardsetList,
                                 MainActivity.cardCountList,
                                 R.layout.main_horizontal_set_layout,
-                                3
+                                5
                             )
                         }
                     }
